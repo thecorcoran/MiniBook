@@ -1,100 +1,164 @@
+// @ts-nocheck
 document.addEventListener('DOMContentLoaded', () => {
     const rhymingBooksContainer = document.getElementById('rhyming-books-container');
     const blendsAndSegmentsBooksContainer = document.getElementById('blends-and-segments-books-container');
     const findItDrawItBooksContainer = document.getElementById('find-it-draw-it-books-container');
 
     async function downloadPDF(book, bookKey, bookType) {
-        const { PDFDocument, rgb, StandardFonts } = PDFLib;
+        try {
+            const { PDFDocument, rgb, StandardFonts } = PDFLib;
 
-        const pdfDoc = await PDFDocument.create();
-        const page = pdfDoc.addPage([11 * 72, 8.5 * 72]); // Letter size, landscape
+            const pdfDoc = await PDFDocument.create();
+            const page = pdfDoc.addPage([11 * 72, 8.5 * 72]); // Letter size, landscape
 
-        const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-        const timesRomanBoldFont = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
+            const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+            const timesRomanBoldFont = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
 
-        const pageLayout = ['Page 5', 'Page 6', 'Page 7', 'Back Cover', 'Page 4', 'Page 3', 'Page 2', 'Page 1'];
+            const pageLayout = ['Page 5', 'Page 6', 'Page 7', 'Back Cover', 'Page 4', 'Page 3', 'Page 2', 'Page 1'];
 
-        const cellWidth = (11 * 72) / 4;
-        const cellHeight = (8.5 * 72) / 2;
+            const cellWidth = (11 * 72) / 4;
+            const cellHeight = (8.5 * 72) / 2;
 
-        for (let i = 0; i < pageLayout.length; i++) {
-            const pageName = pageLayout[i];
-            const col = i % 4;
-            const row = Math.floor(i / 4);
+            for (let i = 0; i < pageLayout.length; i++) {
+                const pageName = pageLayout[i];
+                const col = i % 4;
+                const row = Math.floor(i / 4);
 
-            const x = col * cellWidth;
-            const y = (1 - row) * cellHeight;
+                const x = col * cellWidth;
+                const y = (1 - row) * cellHeight;
 
-            let text = book[pageName] || pageName;
-            let font = helveticaFont;
-            let size = 12;
-            let yPos;
-            let rotation = 0;
-            let align = 'center';
-
-            if (pageName === 'Cover' || pageName === 'Back Cover') {
-                if (pageName === 'Cover') {
-                    font = timesRomanBoldFont;
-                    size = 24; // Increased font size for cover
+                let text = '';
+                if (pageName === 'Cover') { // This is the logical Cover page
+                    text = book.Cover || 'Title Page';
+                } else if (pageName === 'Back Cover') { // This is the logical End page
+                    text = book.TheEnd || 'The End!';
+                } else if (pageName === 'Page 1') { // Physical page 1, which is the front cover
+                    text = book.Cover || 'Title Page';
+                } else if (pageName === 'Page 2') {
+                    text = book.Story1 || 'Story Page 1';
+                } else if (pageName === 'Page 3') {
+                    text = book.Story2 || 'Story Page 2';
+                } else if (pageName === 'Page 4') {
+                    text = book.Story3 || 'Story Page 3';
+                } else if (pageName === 'Page 5') {
+                    text = book.Story4 || 'Story Page 4';
+                } else if (pageName === 'Page 6') {
+                    text = book.Story5 || 'Story Page 5';
+                } else if (pageName === 'Page 7') {
+                    text = book.Story6 || 'Story Page 6';
                 } else {
-                    text = 'The End!';
-                    size = 24; // Increased font size for back cover
+                    text = pageName; // Fallback for any other unexpected pageName
                 }
-                const textWidth = font.widthOfTextAtSize(text, size);
-                const textHeight = font.heightAtSize(size);
-                const centerX = x + cellWidth / 2;
-                const centerY = y + cellHeight / 2;
-                yPos = centerY - textHeight / 2; // Centered vertically
-                if (row === 0) {
-                    rotation = 180;
+                let font = helveticaFont;
+                let size = 12;
+                let rotation = 0;
+
+                let centerX = x + cellWidth / 2;
+                let centerY = y + cellHeight / 2;
+
+                let drawX;
+                let drawY;
+
+                if (pageName === 'Cover' || pageName === 'Page 1') { // Title page
+                    font = timesRomanBoldFont;
+                    size = 24;
+                    const textWidth = font.widthOfTextAtSize(text, size);
+                    const textHeight = font.heightAtSize(size);
+
+                    if (row === 0) { // Top row of cells (rotated 180 degrees)
+                        rotation = 180;
+                        drawX = centerX + textWidth / 2;
+                        drawY = centerY + textHeight / 2;
+                    } else {
+                        drawX = centerX - textWidth / 2;
+                        drawY = centerY - textHeight / 2;
+                    }
+                } else if (pageName === 'Back Cover') { // The End page
+                    font = timesRomanBoldFont;
+                    size = 24;
+                    const textWidth = font.widthOfTextAtSize(text, size);
+                    const textHeight = font.heightAtSize(size);
+
+                    if (row === 0) { // Top row of cells (rotated 180 degrees)
+                        rotation = 180;
+                        drawX = centerX + textWidth / 2;
+                        drawY = centerY + textHeight / 2;
+                    }
+
+                    page.drawText(text, {
+                        x: drawX,
+                        y: drawY,
+                        font: font,
+                        size: size,
+                        color: rgb(0, 0, 0),
+                        rotate: PDFLib.degrees(rotation),
+                    });
+                } else { // Story pages (Page 2 to Page 7)
+                    const textWidth = font.widthOfTextAtSize(text, size);
+                    const textHeight = font.heightAtSize(size);
+                    let bottomMargin = 20;
+
+                    if (row === 0) { // Top row of cells (rotated 180 degrees)
+                        rotation = 180;
+                        // For rotated text, "bottom" means the top of the cell after rotation
+                        let unrotatedY = y + cellHeight - bottomMargin - textHeight;
+                        drawX = centerX + textWidth / 2; // Adjusted for 180-degree rotation
+                        drawY = unrotatedY + textHeight; // Adjusted for 180-degree rotation
+                    } else {
+                        drawX = centerX - textWidth / 2;
+                        drawY = y + bottomMargin; // Position at the bottom
+                    }
                 }
+
                 page.drawText(text, {
-                    x: centerX - textWidth / 2,
-                    y: yPos,
+                    x: drawX,
+                    y: drawY,
                     font: font,
                     size: size,
                     color: rgb(0, 0, 0),
                     rotate: PDFLib.degrees(rotation),
-                });
-            } else { // Pages 1-7
-                // Position text at the bottom of the page, with a small margin
-                const textHeight = font.heightAtSize(size);
-                let bottomMargin = 20; // Margin from the bottom of the cell
-                yPos = y + bottomMargin;
-                if (row === 0) { // Top row of cells (rotated 180 degrees)
-                    rotation = 180;
-                    // For rotated pages, "bottom" is actually near the top of the cell in its unrotated state
-                    // So, we need to calculate from the top of the cell and then apply rotation
-                    yPos = y + cellHeight - bottomMargin - textHeight;
-                }
-                const centerX = x + cellWidth / 2;
-                page.drawText(text, {
-                    x: centerX - font.widthOfTextAtSize(text, size) / 2, // Center horizontally
-                    y: yPos,
-                    font: font,
-                    size: size,
-                    color: rgb(0, 0, 0),
-                    rotate: PDFLib.degrees(rotation),
-                    lineHeight: 15,
-                    maxWidth: cellWidth - 40 // Added more padding for text
+                    lineHeight: 15, // Keep for story pages
+                    maxWidth: cellWidth - 40 // Keep for story pages
                 });
             }
-        }
 
-        const pdfBytes = await pdfDoc.save();
-        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `${bookKey}.pdf`;
-        link.click();
+            const pdfBytes = await pdfDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${bookKey}.pdf`;
+            link.click();
+        } catch (error) {
+            console.error("Error generating or downloading PDF:", error);
+            alert("Failed to generate PDF. Please check the console for details.");
+        }
     }
 
     function populateBooks(books, container, bookType) {
-        for (const bookKey in books) {
+        const bookKeys = Object.keys(books);
+        const initialDisplayCount = 3;
+        let displayedCount = 0;
+
+        // Create a wrapper for all book cards within this category
+        const booksWrapper = document.createElement('div');
+        booksWrapper.className = 'books-wrapper'; // A new class for styling
+        container.appendChild(booksWrapper); // Append the wrapper to the main container
+
+        const visibleBooksContainer = document.createElement('div');
+        visibleBooksContainer.className = 'visible-books';
+        booksWrapper.appendChild(visibleBooksContainer); // Append to the wrapper
+
+        const hiddenBooksContainer = document.createElement('div');
+        hiddenBooksContainer.className = 'hidden-books';
+        hiddenBooksContainer.style.display = 'none'; // Initially hidden
+        booksWrapper.appendChild(hiddenBooksContainer); // Append to the wrapper
+
+        for (const bookKey of bookKeys) {
             if (books.hasOwnProperty(bookKey)) {
                 const book = books[bookKey];
                 const card = document.createElement('div');
                 card.className = 'card';
+                card.classList.add(`${bookType}-book-card`);
 
                 const title = document.createElement('h3');
                 title.textContent = book.Cover;
@@ -148,8 +212,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 card.appendChild(button);
 
-                container.appendChild(card);
+                if (displayedCount < initialDisplayCount) {
+                    visibleBooksContainer.appendChild(card);
+                    displayedCount++;
+                } else {
+                    hiddenBooksContainer.appendChild(card);
+                }
             }
+        }
+
+        if (bookKeys.length > initialDisplayCount) {
+            const expandButton = document.createElement('button');
+            expandButton.textContent = 'More Books';
+            expandButton.className = 'expand-button cta-button'; // Reusing cta-button style
+            expandButton.addEventListener('click', () => {
+                const isHidden = hiddenBooksContainer.style.display === 'none';
+                hiddenBooksContainer.style.display = isHidden ? 'block' : 'none';
+                expandButton.textContent = isHidden ? 'Collapse' : 'More Books';
+            });
+            booksWrapper.appendChild(expandButton); // Append to booksWrapper instead of container
         }
     }
 

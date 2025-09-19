@@ -124,12 +124,15 @@ footer {
     margin-bottom: 3rem;
 }
 
-.template-cards {
+.books-wrapper, .visible-books, .hidden-books {
     display: grid; /* Use grid for better control over layout */
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Responsive grid with smaller cards */
     gap: 1rem; /* Reduced gap */
     justify-content: center;
-    /* flex-wrap: wrap; Keep flex-wrap for older browsers, though grid handles it */
+}
+
+.hidden-books {
+    display: none; /* This will be toggled by JS */
 }
 
 .card {
@@ -236,6 +239,28 @@ footer {
 
 .print-button:hover {
     background-color: #3ca94c;
+}
+
+.expand-button {
+    width: fit-content; /* Ensure button only takes up necessary width */
+    margin: 1rem auto; /* Center the button and add some vertical spacing */
+    display: block; /* Make it a block element to allow margin: auto for centering */
+}
+
+/* Book Type Specific Colors */
+.rhyming-book-card {
+    background-color: #e6f7ff; /* Light Blue */
+    border: 1px solid #91d5ff;
+}
+
+.blends-book-card {
+    background-color: #f6ffed; /* Light Green */
+    border: 1px solid #b7eb8f;
+}
+
+.findIt-book-card {
+    background-color: #fff1f0; /* Light Red/Pink */
+    border: 1px solid #ffccc7;
 }
 
 /* Modal Styles */
@@ -416,4 +441,20 @@ footer {
         width: 95vw; /* Adjust for smaller screens */
         height: calc(95vw * (11/8.5)); /* Maintain aspect ratio */
     }
+}
+
+.book-categories-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Distribute space evenly around items */
+    gap: 2rem; /* Space between categories */
+    padding: 2rem; /* Add some padding around the container */
+}
+
+/* Adjust section styles to allow them to shrink/grow within the flex container */
+.book-categories-container section {
+    flex: 1; /* Allow sections to grow and shrink */
+    min-width: 300px; /* Ensure sections don't get too small */
+    max-width: 350px; /* Limit max width for better readability */
+    text-align: center; /* Center the content within each section */
 }
