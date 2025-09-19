@@ -1,0 +1,419 @@
+/* General Styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    margin: 0;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+a {
+    color: #007aff;
+    text-decoration: none;
+}
+
+/* Header */
+header {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 2rem;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 2rem;
+}
+
+/* Hero Section */
+#hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: #fff;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.cta-button {
+    background-color: #007aff;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #005ecb;
+}
+
+/* Features Section */
+#features {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+#features h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.feature-cards {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    max-width: 300px;
+    text-align: left;
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+/* Templates Page */
+#templates {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+#templates h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.template-cards {
+    display: grid; /* Use grid for better control over layout */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Responsive grid with smaller cards */
+    gap: 1rem; /* Reduced gap */
+    justify-content: center;
+    /* flex-wrap: wrap; Keep flex-wrap for older browsers, though grid handles it */
+}
+
+.card {
+    background: #fff;
+    padding: 1rem; /* Reduced padding */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Smaller shadow */
+    text-align: center; /* Center content within card */
+    display: flex; /* Use flex to arrange content vertically */
+    flex-direction: column;
+    justify-content: space-between; /* Distribute space between elements */
+    height: 100%; /* Ensure cards in a row have similar height */
+}
+
+.card h3 {
+    margin-top: 0;
+    font-size: 1.1rem; /* Smaller font size */
+    margin-bottom: 0.5rem;
+}
+
+.card p { /* For preview text, if kept */
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.printable-area {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.page-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1px;
+    background-color: #ccc;
+    height: 100%;
+}
+
+.page-grid.four-page {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 100px);
+}
+
+.page-grid.comic-book {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.page-cell {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column; /* Allow content and page number to stack */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #777;
+    border: 1px solid #eee;
+    box-sizing: border-box;
+}
+
+.page-number {
+    font-size: 12pt;
+    font-weight: bold;
+    margin-top: auto; /* Push to bottom if content is above */
+    margin-bottom: auto; /* Push to top if content is below */
+}
+
+.info-button {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 0.5rem 1rem; /* Reduced padding */
+    border-radius: 5px; /* Smaller border-radius */
+    font-weight: 500; /* Slightly lighter font-weight */
+    border: 1px solid #ccc;
+    cursor: pointer;
+    width: auto; /* Allow button to size to content */
+    margin-bottom: 0.5rem;
+    transition: background-color 0.3s;
+    font-size: 0.85rem; /* Smaller font size */
+}
+
+.info-button:hover {
+    background-color: #e0e0e0;
+}
+
+.print-button, .cta-button { /* Apply to cta-button as well */
+    background-color: #4cd964;
+    color: #fff;
+    padding: 0.5rem 1rem; /* Reduced padding */
+    border-radius: 5px; /* Smaller border-radius */
+    font-weight: 500; /* Slightly lighter font-weight */
+    border: none;
+    cursor: pointer;
+    width: auto; /* Allow button to size to content */
+    transition: background-color 0.3s;
+    font-size: 0.85rem; /* Smaller font size */
+    display: inline-block; /* Make cta-button behave like a button */
+    text-align: center;
+}
+
+.print-button:hover {
+    background-color: #3ca94c;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #000;
+}
+
+/* Editor Page */
+.editor-main {
+    display: flex;
+    height: calc(100vh - 140px); /* Full height minus header/footer */
+}
+
+.toolbar {
+    width: 200px;
+    padding: 1rem;
+    border-right: 1px solid #ddd;
+    background-color: #fff;
+    flex-shrink: 0;
+}
+
+.toolbar button {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    background-color: #007aff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.toolbar button:hover {
+    background-color: #005ecb;
+}
+
+#canvas-container {
+    flex-grow: 1;
+    padding: 1rem;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#canvas {
+    width: 8.5in; /* Simulate letter paper width */
+    height: 11in; /* Simulate letter paper height */
+    background-color: #fff;
+    position: relative;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow: hidden; /* Hide content outside the paper area */
+}
+
+.text-box {
+    position: absolute;
+    border: 1px dashed #007aff;
+    padding: 0.5rem;
+    cursor: grab;
+    min-width: 50px;
+    min-height: 20px;
+    background-color: rgba(255,255,255,0.8);
+    z-index: 10;
+}
+
+.draggable-image {
+    position: absolute;
+    cursor: grab;
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: contain;
+    z-index: 9;
+}
+
+/* Styles for resizable container and handles */
+.resizable-container {
+    position: absolute;
+    cursor: grab;
+    z-index: 10;
+}
+
+.resizable-container .text-box,
+.resizable-container .draggable-image {
+    position: static; /* Let the container handle positioning */
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box; /* Ensure padding/border is inside */
+    margin: 0;
+}
+
+.resize-handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #007aff;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    z-index: 20;
+}
+
+.resize-handle.se {
+    bottom: -5px;
+    right: -5px;
+    cursor: se-resize;
+}
+
+/* Adjust text-box to remove absolute positioning */
+.text-box { border: 1px dashed #007aff; padding: 0.5rem; min-width: 50px; min-height: 20px; background-color: rgba(255,255,255,0.8); }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+
+    nav ul {
+        margin-top: 1rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .feature-cards, .template-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+
+    .editor-main {
+        flex-direction: column;
+    }
+
+    .toolbar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #canvas {
+        width: 95vw; /* Adjust for smaller screens */
+        height: calc(95vw * (11/8.5)); /* Maintain aspect ratio */
+    }
+}

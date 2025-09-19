@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose a Template - Mini-Book Maker</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html" style="color: #333;">Mini-Book Maker</a></div>
+            <ul>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="#">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="rhyming-books">
+            <h2>Printable Rhyming Books</h2>
+            <div class="template-cards" id="rhyming-books-container">
+            </div>
+        </section>
+        <section id="blends-and-segments-books">
+            <h2>Blends and Segments Books</h2>
+            <div class="template-cards" id="blends-and-segments-books-container">
+            </div>
+        </section>
+        <section id="find-it-draw-it-books">
+            <h2>Find It, Draw It Books</h2>
+            <div class="template-cards" id="find-it-draw-it-books-container">
+            </div>
+        </section>
+    </main>
+
+    
+
+    <!-- 8-Page Modal -->
+    <div id="modal-8-page" class="modal">
+        <div class="modal-content">
+            <span class="close-button" data-modal-close="modal-8-page">&times;</span>
+            <h3>8-Page Mini-Book Instructions</h3>
+            <ol>
+                <li><strong>Fold in Half Lengthwise:</strong> Fold the paper in half the long way ("hot dog style"). Crease well and unfold.</li>
+                <li><strong>Fold in Half Widthwise:</strong> Fold the paper in half the short way ("hamburger style").</li>
+                <li><strong>Fold Again:</strong> Keep it folded and fold it in half again in the same direction.</li>
+                <li><strong>Unfold and Cut:</strong> Unfold completely. You should see 8 rectangles. Fold it "hamburger style" again. From the folded edge, cut along the center crease to the next fold line (only cutting one middle section).</li>
+                <li><strong>Form the Book:</strong> Unfold, then fold it "hot dog style". Push the ends toward the center. The cut slit will pop open, forming a plus sign.</li>
+                <li><strong>Assemble:</strong> Push the ends together until the pages stack on top of each other. Choose a front cover and you're done!</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- 4-Page Modal -->
+    <div id="modal-4-page" class="modal">
+        <div class="modal-content">
+            <span class="close-button" data-modal-close="modal-4-page">&times;</span>
+            <h3>4-Page Mini-Book Instructions</h3>
+            <ol>
+                <li><strong>Fold in Half:</strong> Fold the paper in half the short way ("hamburger style").</li>
+                <li><strong>Fold Again:</strong> Fold it in half again.</li>
+                <li><strong>You're Done:</strong> Unfold and you have a 4-page book! For a booklet, you can keep it folded and cut the top edge.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Comic Book Modal -->
+    <div id="modal-comic-book" class="modal">
+        <div class="modal-content">
+            <span class="close-button" data-modal-close="modal-comic-book">&times;</span>
+            <h3>Comic Book Layout Information</h3>
+            <p>This template provides an 8-panel layout suitable for comic book stories. Panels are numbered for easy content placement.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Mini-Book Maker. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="book-data.js"></script>
+    <script src="templates.js"></script>
+</body>
+</html>
