@@ -3,79 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choose a Template - Mini-Book Maker</title>
+    <title>Mini-Book Library - Learn to Read, Blends &amp; Find It Draw It</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
-    
 </head>
 <body>
     <header>
         <nav>
             <div class="logo"><a href="index.html" style="color: #333;">Mini-Book Maker</a></div>
             <ul>
+                <li><a href="templates.html" class="active-nav">Browse Books</a></li>
+                <li><a href="editor.html">Custom Editor</a></li>
+                <li><a href="#" id="open-instructions-link">Folding Guide</a></li>
                 <li><a href="index.html#features">Features</a></li>
-                <li><a href="#">Login</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
+        <div class="templates-hero">
+            <h1>Printable Mini-Book Library</h1>
+            <p>Download print-ready 8-page foldable mini-books or open any title in the editor to customize.</p>
+            <button id="open-instructions-btn" class="cta-button secondary-button">📖 How to Fold &amp; Cut</button>
+        </div>
+
         <div class="book-categories-container">
             <section id="rhyming-books">
-                <h2>Printable Rhyming Books</h2>
-                <div class="template-cards" id="rhyming-books-container">
-                </div>
+                <h2>Learn to Read Kits</h2>
+                <p class="category-subtitle">Systematic, leveled decodable readers focusing on CVC word families and short vowels.</p>
+                <div class="template-cards" id="rhyming-books-container"></div>
             </section>
             <section id="blends-and-segments-books">
-                <h2>Blends and Segments Books</h2>
-                <div class="template-cards" id="blends-and-segments-books-container">
-                </div>
+                <h2>Blends &amp; Segments Books</h2>
+                <p class="category-subtitle">Targeted phonics practice for initial blends, final blends, and consonant digraphs.</p>
+                <div class="template-cards" id="blends-and-segments-books-container"></div>
             </section>
             <section id="find-it-draw-it-books">
                 <h2>Find It, Draw It Books</h2>
-                <div class="template-cards" id="find-it-draw-it-books-container">
-                </div>
+                <p class="category-subtitle">Interactive vocabulary and observation prompts with dedicated drawing space.</p>
+                <div class="template-cards" id="find-it-draw-it-books-container"></div>
             </section>
         </div>
     </main>
 
-    
-
-    <!-- 8-Page Modal -->
+    <!-- 8-Page Folding & Cutting Modal -->
     <div id="modal-8-page" class="modal">
         <div class="modal-content">
             <span class="close-button" data-modal-close="modal-8-page">&times;</span>
-            <h3>8-Page Mini-Book Instructions</h3>
+            <h3>8-Page Mini-Book Folding &amp; Cutting Guide</h3>
+            <p>Each sheet prints 8 pages on a single piece of standard US Letter paper (landscape).</p>
             <ol>
-                <li><strong>Fold in Half Lengthwise:</strong> Fold the paper in half the long way ("hot dog style"). Crease well and unfold.</li>
-                <li><strong>Fold in Half Widthwise:</strong> Fold the paper in half the short way ("hamburger style").</li>
-                <li><strong>Fold Again:</strong> Keep it folded and fold it in half again in the same direction.</li>
-                <li><strong>Unfold and Cut:</strong> Unfold completely. You should see 8 rectangles. Fold it "hamburger style" again. From the folded edge, cut along the center crease to the next fold line (only cutting one middle section).</li>
-                <li><strong>Form the Book:</strong> Unfold, then fold it "hot dog style". Push the ends toward the center. The cut slit will pop open, forming a plus sign.</li>
-                <li><strong>Assemble:</strong> Push the ends together until the pages stack on top of each other. Choose a front cover and you're done!</li>
+                <li><strong>Fold Lengthwise ("Hot Dog"):</strong> Fold the sheet in half the long way (bringing top edge to bottom edge). Crease sharply and unfold.</li>
+                <li><strong>Fold Widthwise into Quarters:</strong> Fold the sheet in half the short way ("hamburger"), then fold each side in half again so the sheet has 4 equal columns. Crease well and unfold flat.</li>
+                <li><strong>Cut the Center Slit:</strong> Fold the paper in half "hamburger" style. Starting from the folded center spine, cut along the middle crease line across the two inner columns only (stop at the outer fold lines). Do not cut all the way through!</li>
+                <li><strong>Pop Open:</strong> Unfold the sheet flat, then fold it lengthwise ("hot dog style") again.</li>
+                <li><strong>Form the Cross:</strong> Push the outer left and right ends toward the center. The center slit will pop open into a diamond / plus sign (+).</li>
+                <li><strong>Fold into Booklet:</strong> Push the pages together to flatten into 4 leaves. Fold the Front Cover (Page 1) to the front, and your 8-page book is ready to read!</li>
             </ol>
-        </div>
-    </div>
-
-    <!-- 4-Page Modal -->
-    <div id="modal-4-page" class="modal">
-        <div class="modal-content">
-            <span class="close-button" data-modal-close="modal-4-page">&times;</span>
-            <h3>4-Page Mini-Book Instructions</h3>
-            <ol>
-                <li><strong>Fold in Half:</strong> Fold the paper in half the short way ("hamburger style").</li>
-                <li><strong>Fold Again:</strong> Fold it in half again.</li>
-                <li><strong>You're Done:</strong> Unfold and you have a 4-page book! For a booklet, you can keep it folded and cut the top edge.</li>
-            </ol>
-        </div>
-    </div>
-
-    <!-- Comic Book Modal -->
-    <div id="modal-comic-book" class="modal">
-        <div class="modal-content">
-            <span class="close-button" data-modal-close="modal-comic-book">&times;</span>
-            <h3>Comic Book Layout Information</h3>
-            <p>This template provides an 8-panel layout suitable for comic book stories. Panels are numbered for easy content placement.</p>
         </div>
     </div>
 

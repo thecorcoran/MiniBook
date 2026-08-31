@@ -1,125 +1,193 @@
 // @ts-nocheck
 document.addEventListener('DOMContentLoaded', () => {
-    const rhymingBooksContainer = document.getElementById('rhyming-books-container');
-    const blendsAndSegmentsBooksContainer = document.getElementById('blends-and-segments-books-container');
-    const findItDrawItBooksContainer = document.getElementById('find-it-draw-it-books-container');
+    const learnToReadContainer = document.getElementById('rhyming-books-container');
+    const blendsAndSegmentsContainer = document.getElementById('blends-and-segments-books-container');
+    const findItDrawItContainer = document.getElementById('find-it-draw-it-books-container');
 
     async function downloadPDF(book, bookKey, bookType) {
         try {
-            const { PDFDocument, rgb, StandardFonts } = PDFLib;
+            const { PDFDocument, rgb, StandardFonts, degrees } = PDFLib;
 
             const pdfDoc = await PDFDocument.create();
-            const page = pdfDoc.addPage([11 * 72, 8.5 * 72]); // Letter size, landscape
+            // Standard US Letter Landscape: 11" x 8.5" (792pt x 612pt)
+            const pageWidth = 11 * 72;
+            const pageHeight = 8.5 * 72;
+            const page = pdfDoc.addPage([pageWidth, pageHeight]);
 
             const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+            const helveticaBoldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
             const timesRomanBoldFont = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
 
-            const pageLayout = ['Page 5', 'Page 6', 'Page 7', 'Back Cover', 'Page 4', 'Page 3', 'Page 2', 'Page 1'];
+            // Imposition layout:
+            // Top Row (180° rotation): Page 4, Page 5, Page 6, Page 7
+            // Bottom Row (0° rotation): Page 3, Page 2, Page 1 (Front Cover), Back Cover (Page 8)
+            const pageLayout = ['Page 4', 'Page 5', 'Page 6', 'Page 7', 'Page 3', 'Page 2', 'Page 1', 'Back Cover'];
 
-            const cellWidth = (11 * 72) / 4;
-            const cellHeight = (8.5 * 72) / 2;
+            const cellWidth = pageWidth / 4;   // 198 pt
+            const cellHeight = pageHeight / 2; // 306 pt
+            const margin = 22; // 0.3in margin away from folds/edges
+            const maxTextWidth = cellWidth - (margin * 2); // 154 pt
 
+            // Draw fold and cut guidelines
+            const guideColor = rgb(0.8, 0.8, 0.8);
+            const cutColor = rgb(0.3, 0.3, 0.3);
+
+            // Vertical fold lines
+            for (let c = 1; c < 4; c++) {
+                page.drawLine({
+                    start: { x: c * cellWidth, y: 0 },
+                    end: { x: c * cellWidth, y: pageHeight },
+                    thickness: 0.5,
+                    color: guideColor,
+                    dashArray: [2, 3]
+                });
+            }
+
+            // Outer horizontal fold lines (not cut)
+            page.drawLine({
+                start: { x: 0, y: cellHeight },
+                end: { x: cellWidth, y: cellHeight },
+                thickness: 0.5,
+                color: guideColor,
+                dashArray: [2, 3]
+            });
+            page.drawLine({
+                start: { x: 3 * cellWidth, y: cellHeight },
+                end: { x: 4 * cellWidth, y: cellHeight },
+                thickness: 0.5,
+                color: guideColor,
+                dashArray: [2, 3]
+            });
+
+            // Center horizontal CUT slit (between columns 1 and 3 along the center fold)
+            page.drawLine({
+                start: { x: cellWidth, y: cellHeight },
+                end: { x: 3 * cellWidth, y: cellHeight },
+                thickness: 1.2,
+                color: cutColor,
+                dashArray: [4, 4]
+            });
+
+            // Draw each page cell
             for (let i = 0; i < pageLayout.length; i++) {
                 const pageName = pageLayout[i];
                 const col = i % 4;
-                const row = Math.floor(i / 4);
+                const row = Math.floor(i / 4); // 0 = top row, 1 = bottom row
 
                 const x = col * cellWidth;
-                const y = (1 - row) * cellHeight;
+                const y = (1 - row) * cellHeight; // row 0: y=306, row 1: y=0
 
                 let text = '';
-                if (pageName === 'Cover') { // This is the logical Cover page
+                let isCover = false;
+                let isBackCover = false;
+                let pageNumberLabel = '';
+
+                if (pageName === 'Page 1') {
                     text = book.Cover || 'Title Page';
-                } else if (pageName === 'Back Cover') { // This is the logical End page
-                    text = book.TheEnd || 'The End!';
-                } else if (pageName === 'Page 1') { // Physical page 1, which is the front cover
-                    text = book.Cover || 'Title Page';
+                    isCover = true;
+                } else if (pageName === 'Back Cover') {
+                    text = book.TheEnd || 'The End';
+                    isBackCover = true;
                 } else if (pageName === 'Page 2') {
-                    text = book.Story1 || 'Story Page 1';
+                    text = book.Story1 || '';
+                    pageNumberLabel = '2';
                 } else if (pageName === 'Page 3') {
-                    text = book.Story2 || 'Story Page 2';
+                    text = book.Story2 || '';
+                    pageNumberLabel = '3';
                 } else if (pageName === 'Page 4') {
-                    text = book.Story3 || 'Story Page 3';
+                    text = book.Story3 || '';
+                    pageNumberLabel = '4';
                 } else if (pageName === 'Page 5') {
-                    text = book.Story4 || 'Story Page 4';
+                    text = book.Story4 || '';
+                    pageNumberLabel = '5';
                 } else if (pageName === 'Page 6') {
-                    text = book.Story5 || 'Story Page 5';
+                    text = book.Story5 || '';
+                    pageNumberLabel = '6';
                 } else if (pageName === 'Page 7') {
-                    text = book.Story6 || 'Story Page 6';
+                    text = book.Story6 || '';
+                    pageNumberLabel = '7';
+                }
+
+                if (isCover || isBackCover) {
+                    const font = timesRomanBoldFont;
+                    const size = 18;
+                    const lineHeight = 22;
+
+                    if (row === 0) { // Top row: 180° rotation
+                        page.drawText(text, {
+                            x: x + cellWidth - margin,
+                            y: y + cellHeight - margin - 80,
+                            font: font,
+                            size: size,
+                            lineHeight: lineHeight,
+                            maxWidth: maxTextWidth,
+                            color: rgb(0, 0, 0),
+                            rotate: degrees(180)
+                        });
+                    } else { // Bottom row: 0° rotation
+                        page.drawText(text, {
+                            x: x + margin,
+                            y: y + cellHeight - margin - 60,
+                            font: font,
+                            size: size,
+                            lineHeight: lineHeight,
+                            maxWidth: maxTextWidth,
+                            color: rgb(0, 0, 0),
+                            rotate: degrees(0)
+                        });
+                    }
                 } else {
-                    text = pageName; // Fallback for any other unexpected pageName
-                }
-                let font = helveticaFont;
-                let size = 12;
-                let rotation = 0;
+                    // Story pages: Left-justified text in lower area, with safe margins
+                    const font = helveticaFont;
+                    const size = 13;
+                    const lineHeight = 18;
 
-                let centerX = x + cellWidth / 2;
-                let centerY = y + cellHeight / 2;
+                    if (row === 0) { // Top row: 180° rotation
+                        page.drawText(text, {
+                            x: x + cellWidth - margin,
+                            y: y + margin + 60,
+                            font: font,
+                            size: size,
+                            lineHeight: lineHeight,
+                            maxWidth: maxTextWidth,
+                            color: rgb(0, 0, 0),
+                            rotate: degrees(180)
+                        });
 
-                let drawX;
-                let drawY;
+                        if (pageNumberLabel) {
+                            page.drawText(pageNumberLabel, {
+                                x: x + margin + 10,
+                                y: y + margin + 15,
+                                font: helveticaBoldFont,
+                                size: 9,
+                                color: rgb(0.4, 0.4, 0.4),
+                                rotate: degrees(180)
+                            });
+                        }
+                    } else { // Bottom row: 0° rotation
+                        page.drawText(text, {
+                            x: x + margin,
+                            y: y + margin + 45,
+                            font: font,
+                            size: size,
+                            lineHeight: lineHeight,
+                            maxWidth: maxTextWidth,
+                            color: rgb(0, 0, 0),
+                            rotate: degrees(0)
+                        });
 
-                if (pageName === 'Cover' || pageName === 'Page 1') { // Title page
-                    font = timesRomanBoldFont;
-                    size = 24;
-                    const textWidth = font.widthOfTextAtSize(text, size);
-                    const textHeight = font.heightAtSize(size);
-
-                    if (row === 0) { // Top row of cells (rotated 180 degrees)
-                        rotation = 180;
-                        drawX = centerX + textWidth / 2;
-                        drawY = centerY + textHeight / 2;
-                    } else {
-                        drawX = centerX - textWidth / 2;
-                        drawY = centerY - textHeight / 2;
-                    }
-                } else if (pageName === 'Back Cover') { // The End page
-                    font = timesRomanBoldFont;
-                    size = 24;
-                    const textWidth = font.widthOfTextAtSize(text, size);
-                    const textHeight = font.heightAtSize(size);
-
-                    if (row === 0) { // Top row of cells (rotated 180 degrees)
-                        rotation = 180;
-                        drawX = centerX + textWidth / 2;
-                        drawY = centerY + textHeight / 2;
-                    }
-
-                    page.drawText(text, {
-                        x: drawX,
-                        y: drawY,
-                        font: font,
-                        size: size,
-                        color: rgb(0, 0, 0),
-                        rotate: PDFLib.degrees(rotation),
-                    });
-                } else { // Story pages (Page 2 to Page 7)
-                    const textWidth = font.widthOfTextAtSize(text, size);
-                    const textHeight = font.heightAtSize(size);
-                    let bottomMargin = 20;
-
-                    if (row === 0) { // Top row of cells (rotated 180 degrees)
-                        rotation = 180;
-                        // For rotated text, "bottom" means the top of the cell after rotation
-                        let unrotatedY = y + cellHeight - bottomMargin - textHeight;
-                        drawX = centerX + textWidth / 2; // Adjusted for 180-degree rotation
-                        drawY = unrotatedY + textHeight; // Adjusted for 180-degree rotation
-                    } else {
-                        drawX = centerX - textWidth / 2;
-                        drawY = y + bottomMargin; // Position at the bottom
+                        if (pageNumberLabel) {
+                            page.drawText(pageNumberLabel, {
+                                x: x + cellWidth - margin - 10,
+                                y: y + margin,
+                                font: helveticaBoldFont,
+                                size: 9,
+                                color: rgb(0.4, 0.4, 0.4),
+                                rotate: degrees(0)
+                            });
+                        }
                     }
                 }
-
-                page.drawText(text, {
-                    x: drawX,
-                    y: drawY,
-                    font: font,
-                    size: size,
-                    color: rgb(0, 0, 0),
-                    rotate: PDFLib.degrees(rotation),
-                    lineHeight: 15, // Keep for story pages
-                    maxWidth: cellWidth - 40 // Keep for story pages
-                });
             }
 
             const pdfBytes = await pdfDoc.save();
@@ -134,107 +202,149 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function createBookCard(book, bookKey, bookType) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.classList.add(`${bookType}-book-card`);
+
+        const title = document.createElement('h3');
+        title.textContent = book.Cover;
+        card.appendChild(title);
+
+        const fullText = document.createElement('div');
+        fullText.style.display = 'none';
+        fullText.className = 'book-full-text-preview';
+
+        for (const page in book) {
+            const pageText = document.createElement('p');
+            pageText.innerHTML = `<strong>${page}:</strong> ${book[page]}`;
+            fullText.appendChild(pageText);
+        }
+        card.appendChild(fullText);
+
+        const buttonGroup = document.createElement('div');
+        buttonGroup.className = 'card-actions';
+
+        // Toggle Preview button
+        const toggleButton = document.createElement('button');
+        toggleButton.innerHTML = '📖 Preview';
+        toggleButton.title = 'Toggle Full Text Preview';
+        toggleButton.className = 'info-button';
+        toggleButton.addEventListener('click', () => {
+            const isHidden = fullText.style.display === 'none';
+            fullText.style.display = isHidden ? 'block' : 'none';
+            toggleButton.innerHTML = isHidden ? '📕 Hide' : '📖 Preview';
+        });
+        buttonGroup.appendChild(toggleButton);
+
+        // Download PDF button
+        const pdfButton = document.createElement('button');
+        pdfButton.className = 'cta-button';
+        pdfButton.textContent = 'Download PDF';
+        pdfButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            downloadPDF(book, bookKey, bookType);
+        });
+        buttonGroup.appendChild(pdfButton);
+
+        // Customize in Editor button
+        const editButton = document.createElement('a');
+        editButton.href = `editor.html?book=${encodeURIComponent(bookKey)}`;
+        editButton.className = 'cta-button secondary-button';
+        editButton.textContent = 'Customize';
+        buttonGroup.appendChild(editButton);
+
+        card.appendChild(buttonGroup);
+        return card;
+    }
+
     function populateBooks(books, container, bookType) {
         const bookKeys = Object.keys(books);
-        const initialDisplayCount = 3;
-        let displayedCount = 0;
+        const totalBooks = bookKeys.length;
+        const batchSize = 6;
+        let currentCount = 0;
 
-        // Create a wrapper for all book cards within this category
         const booksWrapper = document.createElement('div');
-        booksWrapper.className = 'books-wrapper'; // A new class for styling
-        container.appendChild(booksWrapper); // Append the wrapper to the main container
+        booksWrapper.className = 'books-wrapper';
+        container.appendChild(booksWrapper);
 
-        const visibleBooksContainer = document.createElement('div');
-        visibleBooksContainer.className = 'visible-books';
-        booksWrapper.appendChild(visibleBooksContainer); // Append to the wrapper
+        const gridContainer = document.createElement('div');
+        gridContainer.className = 'visible-books';
+        booksWrapper.appendChild(gridContainer);
 
-        const hiddenBooksContainer = document.createElement('div');
-        hiddenBooksContainer.className = 'hidden-books';
-        hiddenBooksContainer.style.display = 'none'; // Initially hidden
-        booksWrapper.appendChild(hiddenBooksContainer); // Append to the wrapper
+        const controlsContainer = document.createElement('div');
+        controlsContainer.className = 'pagination-controls';
 
-        for (const bookKey of bookKeys) {
-            if (books.hasOwnProperty(bookKey)) {
-                const book = books[bookKey];
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.classList.add(`${bookType}-book-card`);
+        const counterLabel = document.createElement('span');
+        counterLabel.className = 'books-counter';
 
-                const title = document.createElement('h3');
-                title.textContent = book.Cover;
-                card.appendChild(title);
+        const actionButton = document.createElement('button');
+        actionButton.className = 'cta-button secondary-button pagination-button';
 
-                // Full text container, initially hidden
-                const fullText = document.createElement('div');
-                fullText.style.display = 'none';
-                fullText.style.textAlign = 'left'; // Align text left within the expanded view
-                fullText.style.fontSize = '0.9rem';
-                fullText.style.marginTop = '0.5rem';
-                fullText.style.marginBottom = '0.5rem';
-                fullText.style.padding = '0.5rem';
-                fullText.style.backgroundColor = '#f9f9f9';
-                fullText.style.borderRadius = '5px';
-                fullText.style.maxHeight = '150px'; // Limit height
-                fullText.style.overflowY = 'auto'; // Add scroll if content overflows
+        controlsContainer.appendChild(counterLabel);
+        controlsContainer.appendChild(actionButton);
+        booksWrapper.appendChild(controlsContainer);
 
-                for (const page in book) {
-                    const pageText = document.createElement('p');
-                    pageText.innerHTML = `<strong>${page}:</strong> ${book[page]}`;
-                    pageText.style.marginBottom = '0.2rem';
-                    fullText.appendChild(pageText);
-                }
-                card.appendChild(fullText);
+        function updateDisplay() {
+            counterLabel.textContent = `Showing ${Math.min(currentCount, totalBooks)} of ${totalBooks} books`;
 
-                // Toggle button for showing/hiding full text
-                const toggleButton = document.createElement('button');
-                toggleButton.innerHTML = '📖'; // Book icon
-                toggleButton.title = 'Toggle Full Text';
-                toggleButton.className = 'info-button'; // Reusing info-button style
-                toggleButton.style.width = 'fit-content'; // Adjust width to content
-                toggleButton.style.padding = '0.3rem 0.6rem'; // Smaller padding
-                toggleButton.style.marginBottom = '0.5rem';
-                toggleButton.addEventListener('click', () => {
-                    const isHidden = fullText.style.display === 'none';
-                    fullText.style.display = isHidden ? 'block' : 'none';
-                    toggleButton.innerHTML = isHidden ? '📕' : '📖'; // Change icon on toggle
-                });
-                card.appendChild(toggleButton);
-
-                const button = document.createElement('a');
-                button.href = '#';
-                button.className = 'cta-button';
-                button.textContent = 'Download PDF';
-                button.style.display = 'block';
-                button.style.textAlign = 'center';
-                button.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    downloadPDF(book, bookKey, bookType);
-                });
-                card.appendChild(button);
-
-                if (displayedCount < initialDisplayCount) {
-                    visibleBooksContainer.appendChild(card);
-                    displayedCount++;
-                } else {
-                    hiddenBooksContainer.appendChild(card);
-                }
+            if (currentCount >= totalBooks) {
+                actionButton.textContent = 'Collapse';
+            } else {
+                const remaining = totalBooks - currentCount;
+                const nextBatch = Math.min(batchSize, remaining);
+                actionButton.textContent = `Show More (+${nextBatch})`;
             }
         }
 
-        if (bookKeys.length > initialDisplayCount) {
-            const expandButton = document.createElement('button');
-            expandButton.textContent = 'More Books';
-            expandButton.className = 'expand-button cta-button'; // Reusing cta-button style
-            expandButton.addEventListener('click', () => {
-                const isHidden = hiddenBooksContainer.style.display === 'none';
-                hiddenBooksContainer.style.display = isHidden ? 'block' : 'none';
-                expandButton.textContent = isHidden ? 'Collapse' : 'More Books';
+        function loadNextBatch() {
+            const nextLimit = Math.min(currentCount + batchSize, totalBooks);
+            for (let i = currentCount; i < nextLimit; i++) {
+                const key = bookKeys[i];
+                const card = createBookCard(books[key], key, bookType);
+                gridContainer.appendChild(card);
+            }
+            currentCount = nextLimit;
+            updateDisplay();
+        }
+
+        function collapseView() {
+            while (gridContainer.children.length > batchSize) {
+                gridContainer.removeChild(gridContainer.lastChild);
+            }
+            currentCount = batchSize;
+            updateDisplay();
+
+            // Smooth scroll back to section header
+            const section = container.closest('section');
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Initial render of first batch
+        loadNextBatch();
+
+        if (totalBooks <= batchSize) {
+            controlsContainer.style.display = 'none';
+        } else {
+            actionButton.addEventListener('click', () => {
+                if (currentCount >= totalBooks) {
+                    collapseView();
+                } else {
+                    loadNextBatch();
+                }
             });
-            booksWrapper.appendChild(expandButton); // Append to booksWrapper instead of container
         }
     }
 
-    populateBooks(rhymingBooks, rhymingBooksContainer, 'rhyming');
-    populateBooks(blendsAndSegmentsBooks, blendsAndSegmentsBooksContainer, 'blends');
-    populateBooks(findItDrawItBooks, findItDrawItBooksContainer, 'findIt');
+    if (learnToReadContainer && typeof learnToReadBooks !== 'undefined') {
+        populateBooks(learnToReadBooks, learnToReadContainer, 'rhyming');
+    }
+    if (blendsAndSegmentsContainer && typeof blendsAndSegmentsBooks !== 'undefined') {
+        populateBooks(blendsAndSegmentsBooks, blendsAndSegmentsContainer, 'blends');
+    }
+    if (findItDrawItContainer && typeof findItDrawItBooks !== 'undefined') {
+        populateBooks(findItDrawItBooks, findItDrawItContainer, 'findIt');
+    }
 });
