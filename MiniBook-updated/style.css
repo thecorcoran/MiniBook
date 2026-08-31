@@ -1,0 +1,508 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+a {
+    color: #007aff;
+    text-decoration: none;
+}
+
+/* Header & Nav */
+header {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 2rem;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1.5rem;
+}
+
+nav ul li a {
+    color: #555;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+nav ul li a:hover,
+nav ul li a.active-nav {
+    color: #007aff;
+}
+
+/* Hero Section */
+#hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.hero-content h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    color: #222;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    max-width: 650px;
+    margin: 0 auto 2rem;
+    color: #666;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.templates-hero {
+    text-align: center;
+    padding: 2.5rem 1rem 1rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.templates-hero h1 {
+    font-size: 2.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.templates-hero p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+/* Buttons */
+.cta-button {
+    background-color: #007aff;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.cta-button:hover {
+    background-color: #005ecb;
+}
+
+.secondary-button {
+    background-color: #f0f4f8;
+    color: #007aff;
+    border: 1px solid #cce0f5;
+}
+
+.secondary-button:hover {
+    background-color: #e1effe;
+}
+
+.info-button {
+    background-color: #f7f7f7;
+    color: #555;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    font-weight: 500;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.2s;
+}
+
+.info-button:hover {
+    background-color: #eaeaea;
+}
+
+.print-button {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.print-button:hover {
+    background-color: #218838;
+}
+
+/* Features Section */
+#features {
+    padding: 4rem 2rem;
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#features h2 {
+    font-size: 2.2rem;
+    margin-bottom: 2.5rem;
+}
+
+.feature-cards {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Catalog & Category Layout */
+.book-categories-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.book-categories-container section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.book-categories-container h2 {
+    margin-top: 0;
+    margin-bottom: 0.3rem;
+    font-size: 1.8rem;
+}
+
+.category-subtitle {
+    color: #777;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.books-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.visible-books {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+/* Pagination Controls */
+.pagination-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid #f0f0f0;
+}
+
+.books-counter {
+    font-size: 0.85rem;
+    color: #777;
+    font-weight: 500;
+}
+
+.pagination-button {
+    min-width: 150px;
+}
+
+.card {
+    background: #fff;
+    padding: 1.25rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #e5e5e5;
+    text-align: left;
+}
+
+.card h3 {
+    margin-top: 0;
+    font-size: 1.15rem;
+    margin-bottom: 0.8rem;
+    color: #222;
+}
+
+.card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.book-full-text-preview {
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    padding: 0.6rem;
+    background-color: #fbfbfb;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    max-height: 160px;
+    overflow-y: auto;
+    line-height: 1.4;
+}
+
+.book-full-text-preview p {
+    margin: 0.2rem 0;
+}
+
+.rhyming-book-card {
+    border-top: 4px solid #007aff;
+}
+
+.blends-book-card {
+    border-top: 4px solid #28a745;
+}
+
+.findIt-book-card {
+    border-top: 4px solid #ff9500;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 6% auto;
+    padding: 2.5rem;
+    border-radius: 10px;
+    max-width: 650px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.modal-content ol {
+    padding-left: 1.4rem;
+}
+
+.modal-content li {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+}
+
+.close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 28px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #222;
+}
+
+/* Editor Page */
+.editor-main {
+    display: flex;
+    height: calc(100vh - 140px);
+    min-height: 600px;
+}
+
+.toolbar {
+    width: 220px;
+    padding: 1.2rem;
+    border-right: 1px solid #ddd;
+    background-color: #fff;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.toolbar button {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.toolbar-hint {
+    margin-top: auto;
+    padding: 0.8rem;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    font-size: 0.8rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+#canvas-container {
+    flex-grow: 1;
+    padding: 1.5rem;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e9ecef;
+}
+
+/* Canvas is 11in x 8.5in in Landscape */
+#canvas {
+    width: 11in;
+    height: 8.5in;
+    background-color: #fff;
+    position: relative;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.page-grid {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    background-color: transparent;
+}
+
+.page-cell {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    box-sizing: border-box;
+    padding: 0.25in;
+}
+
+.page-inner-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 0.2in;
+    box-sizing: border-box;
+}
+
+.page-number {
+    position: absolute;
+    bottom: 0.15in;
+    right: 0.15in;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #aaa;
+}
+
+.text-box {
+    border: 1px dashed #007aff;
+    padding: 0.4rem;
+    min-width: 60px;
+    min-height: 24px;
+    background-color: rgba(255,255,255,0.9);
+    font-size: 0.95rem;
+    line-height: 1.35;
+    color: #222;
+    text-align: left;
+}
+
+.draggable-image {
+    cursor: grab;
+    max-width: 90px;
+    max-height: 90px;
+    object-fit: contain;
+}
+
+.resizable-container {
+    position: absolute;
+    cursor: grab;
+    z-index: 10;
+}
+
+.resize-handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #007aff;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    z-index: 20;
+}
+
+.resize-handle.se {
+    bottom: -5px;
+    right: -5px;
+    cursor: se-resize;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .editor-main {
+        flex-direction: column;
+        height: auto;
+    }
+    .toolbar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .toolbar button {
+        width: auto;
+        flex: 1;
+    }
+    #canvas {
+        width: 90vw;
+        height: calc(90vw * (8.5 / 11));
+    }
+}
