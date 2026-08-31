@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const blendsAndSegmentsContainer = document.getElementById('blends-and-segments-books-container');
     const findItDrawItContainer = document.getElementById('find-it-draw-it-books-container');
 
+    // PDF Generation Function
     async function downloadPDF(book, bookKey, bookType) {
         try {
             const { PDFDocument, rgb, StandardFonts, degrees } = PDFLib;
@@ -26,11 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const cellWidth = pageWidth / 4;   // 198 pt
             const cellHeight = pageHeight / 2; // 306 pt
             const margin = 22; // 0.3in margin away from folds/edges
-            const maxTextWidth = cellWidth - (margin * 2); // 154 pt
+            const maxStoryTextWidth = cellWidth - (margin * 2); // 154 pt
 
             // Draw fold and cut guidelines
-            const guideColor = rgb(0.8, 0.8, 0.8);
-            const cutColor = rgb(0.3, 0.3, 0.3);
+            const guideColor = rgb(0.82, 0.82, 0.82);
+            const cutColor = rgb(0.25, 0.25, 0.25);
 
             // Vertical fold lines
             for (let c = 1; c < 4; c++) {
@@ -67,6 +68,67 @@ document.addEventListener('DOMContentLoaded', () => {
                 color: cutColor,
                 dashArray: [4, 4]
             });
+
+            // Helper function to draw multiline centered text horizontally and vertically in a cell
+            function drawCenteredInCell(text, font, size, cellX, cellY, cellW, cellH, rotateDeg = 0) {
+                const words = text.split(' ');
+                const maxLineW = cellW - (margin * 2);
+                let lines = [];
+                let currentLine = '';
+
+                for (const word of words) {
+                    const testLine = currentLine ? `${currentLine} ${word}` : word;
+                    const testWidth = font.widthOfTextAtSize(testLine, size);
+                    if (testWidth <= maxLineW) {
+                        currentLine = testLine;
+                    } else {
+                        if (currentLine) lines.push(currentLine);
+                        currentLine = word;
+                    }
+                }
+                if (currentLine) lines.push(currentLine);
+
+                const lineHeight = size * 1.35;
+                const totalTextHeight = lines.length * lineHeight;
+
+                if (rotateDeg === 0) {
+                    // Start Y for top line to vertically center the entire block
+                    const startY = cellY + (cellH / 2) + (totalTextHeight / 2) - (size * 0.85);
+
+                    lines.forEach((line, idx) => {
+                        const lineWidth = font.widthOfTextAtSize(line, size);
+                        const lineX = cellX + (cellW - lineWidth) / 2;
+                        const lineY = startY - (idx * lineHeight);
+
+                        page.drawText(line, {
+                            x: lineX,
+                            y: lineY,
+                            font: font,
+                            size: size,
+                            color: rgb(0, 0, 0),
+                            rotate: degrees(0)
+                        });
+                    });
+                } else if (rotateDeg === 180) {
+                    // For 180 degree rotation around center
+                    const startY = cellY + (cellH / 2) - (totalTextHeight / 2) + (size * 0.85);
+
+                    lines.forEach((line, idx) => {
+                        const lineWidth = font.widthOfTextAtSize(line, size);
+                        const lineX = cellX + cellW - (cellW - lineWidth) / 2;
+                        const lineY = startY + (idx * lineHeight);
+
+                        page.drawText(line, {
+                            x: lineX,
+                            y: lineY,
+                            font: font,
+                            size: size,
+                            color: rgb(0, 0, 0),
+                            rotate: degrees(180)
+                        });
+                    });
+                }
+            }
 
             // Draw each page cell
             for (let i = 0; i < pageLayout.length; i++) {
@@ -108,74 +170,59 @@ document.addEventListener('DOMContentLoaded', () => {
                     pageNumberLabel = '7';
                 }
 
-                if (isCover || isBackCover) {
-                    const font = timesRomanBoldFont;
-                    const size = 18;
-                    const lineHeight = 22;
-
-                    if (row === 0) { // Top row: 180° rotation
-                        page.drawText(text, {
-                            x: x + cellWidth - margin,
-                            y: y + cellHeight - margin - 80,
-                            font: font,
-                            size: size,
-                            lineHeight: lineHeight,
-                            maxWidth: maxTextWidth,
-                            color: rgb(0, 0, 0),
-                            rotate: degrees(180)
-                        });
-                    } else { // Bottom row: 0° rotation
-                        page.drawText(text, {
-                            x: x + margin,
-                            y: y + cellHeight - margin - 60,
-                            font: font,
-                            size: size,
-                            lineHeight: lineHeight,
-                            maxWidth: maxTextWidth,
-                            color: rgb(0, 0, 0),
-                            rotate: degrees(0)
-                        });
-                    }
+                if (isCover) {
+                    // Page 1 is on bottom row (row 1, rotation 0°): Title is centered horizontally and vertically
+                    drawCenteredInCell(text, timesRomanBoldFont, 18, x, y, cellWidth, cellHeight, 0);
+                } else if (isBackCover) {
+                    // Page 8 (Back Cover) is on bottom row (row 1, rotation 0°): "The End" is centered horizontally and vertically
+                    drawCenteredInCell(text, timesRomanBoldFont, 20, x, y, cellWidth, cellHeight, 0);
                 } else {
-                    // Story pages: Left-justified text in lower area, with safe margins
+                    // Story pages: Left-justified text positioned towards the BOTTOM of the folded page
                     const font = helveticaFont;
                     const size = 13;
                     const lineHeight = 18;
 
-                    if (row === 0) { // Top row: 180° rotation
+                    if (row === 0) {
+                        // Top Row (Pages 4, 5, 6, 7): Rotated 180°.
+                        // To position text towards the bottom of the folded page (away from center fold, near sheet top edge):
+                        // Sheet Y is near top edge (y + cellHeight - margin - 45 = 545pt).
                         page.drawText(text, {
                             x: x + cellWidth - margin,
-                            y: y + margin + 60,
+                            y: y + cellHeight - margin - 45,
                             font: font,
                             size: size,
                             lineHeight: lineHeight,
-                            maxWidth: maxTextWidth,
+                            maxWidth: maxStoryTextWidth,
                             color: rgb(0, 0, 0),
                             rotate: degrees(180)
                         });
 
+                        // Page number placed in bottom-right of the folded page (top-left of sheet cell)
                         if (pageNumberLabel) {
                             page.drawText(pageNumberLabel, {
                                 x: x + margin + 10,
-                                y: y + margin + 15,
+                                y: y + cellHeight - margin - 15,
                                 font: helveticaBoldFont,
                                 size: 9,
                                 color: rgb(0.4, 0.4, 0.4),
                                 rotate: degrees(180)
                             });
                         }
-                    } else { // Bottom row: 0° rotation
+                    } else {
+                        // Bottom Row (Pages 2, 3): Rotated 0°.
+                        // Positioned towards the bottom of the folded page (near sheet bottom edge: y + margin + 45 = 67pt).
                         page.drawText(text, {
                             x: x + margin,
                             y: y + margin + 45,
                             font: font,
                             size: size,
                             lineHeight: lineHeight,
-                            maxWidth: maxTextWidth,
+                            maxWidth: maxStoryTextWidth,
                             color: rgb(0, 0, 0),
                             rotate: degrees(0)
                         });
 
+                        // Page number in bottom-right of the folded page (bottom-right of sheet cell)
                         if (pageNumberLabel) {
                             page.drawText(pageNumberLabel, {
                                 x: x + cellWidth - margin - 10,
@@ -207,9 +254,26 @@ document.addEventListener('DOMContentLoaded', () => {
         card.className = 'card';
         card.classList.add(`${bookType}-book-card`);
 
+        // Badge pill for category
+        const badge = document.createElement('div');
+        badge.className = 'card-badge';
+        if (bookType === 'rhyming') {
+            badge.textContent = 'Learn to Read';
+        } else if (bookType === 'blends') {
+            badge.textContent = 'Blends & Digraphs';
+        } else {
+            badge.textContent = 'Find & Draw';
+        }
+        card.appendChild(badge);
+
         const title = document.createElement('h3');
         title.textContent = book.Cover;
         card.appendChild(title);
+
+        const previewSnippet = document.createElement('p');
+        previewSnippet.className = 'card-snippet';
+        previewSnippet.textContent = book.Story1 ? `"${book.Story1}"` : '';
+        card.appendChild(previewSnippet);
 
         const fullText = document.createElement('div');
         fullText.style.display = 'none';
@@ -315,14 +379,13 @@ document.addEventListener('DOMContentLoaded', () => {
             currentCount = batchSize;
             updateDisplay();
 
-            // Smooth scroll back to section header
             const section = container.closest('section');
             if (section) {
                 section.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
-        // Initial render of first batch
+        // Initial load
         loadNextBatch();
 
         if (totalBooks <= batchSize) {
@@ -338,6 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Initialize Collections
     if (learnToReadContainer && typeof learnToReadBooks !== 'undefined') {
         populateBooks(learnToReadBooks, learnToReadContainer, 'rhyming');
     }
@@ -347,4 +411,37 @@ document.addEventListener('DOMContentLoaded', () => {
     if (findItDrawItContainer && typeof findItDrawItBooks !== 'undefined') {
         populateBooks(findItDrawItBooks, findItDrawItContainer, 'findIt');
     }
+
+    // Horizontal Tab Navigation Filter
+    const tabButtons = document.querySelectorAll('.category-tab-btn');
+    const sections = {
+        'all': document.querySelectorAll('.book-collection-section'),
+        'learn-to-read': [document.getElementById('rhyming-books')],
+        'blends': [document.getElementById('blends-and-segments-books')],
+        'find-it': [document.getElementById('find-it-draw-it-books')]
+    };
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabButtons.forEach(b => b.classList.remove('active-tab'));
+            btn.classList.add('active-tab');
+
+            const categoryKey = btn.dataset.category;
+
+            document.querySelectorAll('.book-collection-section').forEach(sec => {
+                sec.style.display = 'none';
+            });
+
+            if (categoryKey === 'all') {
+                document.querySelectorAll('.book-collection-section').forEach(sec => {
+                    sec.style.display = 'block';
+                });
+            } else {
+                const targetSec = sections[categoryKey];
+                if (targetSec && targetSec[0]) {
+                    targetSec[0].style.display = 'block';
+                }
+            }
+        });
+    });
 });

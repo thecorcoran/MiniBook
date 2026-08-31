@@ -113,6 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const rotation = pageRotations[pageName] || 'rotate(0deg)';
             const pageText = getBookTextForPage(bookData, pageName);
+            const isCover = (pageName === 'Page 1' || pageName === 'Cover');
+            const isBackCover = (pageName === 'Back Cover');
 
             const pageContent = document.createElement('div');
             pageContent.className = 'page-inner-content';
@@ -123,16 +125,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 textBox.className = 'text-box';
                 textBox.textContent = pageText;
                 textBox.setAttribute('contenteditable', 'true');
-                textBox.style.textAlign = 'left';
-                textBox.style.width = '85%';
 
-                if (pageName === 'Page 1' || pageName === 'Cover' || pageName === 'Back Cover') {
+                if (isCover || isBackCover) {
+                    // Centered on page
+                    textBox.style.textAlign = 'center';
                     textBox.style.fontWeight = 'bold';
-                    textBox.style.fontSize = '1.1rem';
+                    textBox.style.fontSize = '1.15rem';
+                    textBox.style.width = '88%';
+                    pageContent.appendChild(textBox);
+                    makeResizableAndDraggable(textBox, pageContent, true);
+                } else {
+                    // Story pages: Left-aligned and towards the bottom of the page
+                    textBox.style.textAlign = 'left';
+                    textBox.style.width = '85%';
+                    pageContent.appendChild(textBox);
+                    makeResizableAndDraggable(textBox, pageContent, false);
                 }
-
-                pageContent.appendChild(textBox);
-                makeResizableAndDraggable(textBox, pageContent);
             } else {
                 pageContent.innerHTML = `<span class="page-number">${pageName}</span>`;
             }
@@ -167,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         textBox.style.width = '85%';
 
         pageContent.appendChild(textBox);
-        makeResizableAndDraggable(textBox, pageContent);
+        makeResizableAndDraggable(textBox, pageContent, false);
 
         textBox.focus();
         document.execCommand('selectAll', false, null);
@@ -193,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 imgElement.style.width = '100px';
 
                 pageContent.appendChild(imgElement);
-                makeResizableAndDraggable(imgElement, pageContent);
+                makeResizableAndDraggable(imgElement, pageContent, true);
             };
             reader.readAsDataURL(file);
         }
@@ -204,14 +212,20 @@ document.addEventListener('DOMContentLoaded', () => {
         window.print();
     });
 
-    function makeResizableAndDraggable(element, containerParent) {
+    function makeResizableAndDraggable(element, containerParent, isCentered = false) {
         const container = document.createElement('div');
         container.className = 'resizable-container';
 
         container.style.position = 'absolute';
-        container.style.bottom = '15%';
-        container.style.left = '50%';
-        container.style.transform = 'translateX(-50%)';
+        if (isCentered) {
+            container.style.top = '50%';
+            container.style.left = '50%';
+            container.style.transform = 'translate(-50%, -50%)';
+        } else {
+            container.style.bottom = '12%';
+            container.style.left = '50%';
+            container.style.transform = 'translateX(-50%)';
+        }
         container.style.width = element.style.width || '150px';
         container.style.height = element.style.height || 'auto';
 
