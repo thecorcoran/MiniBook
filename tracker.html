@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic Checklist &amp; Skills Mastery Tracker | Mini-Book Maker</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .tracker-page {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 5rem;
+        }
+
+        /* Student Metadata Card */
+        .student-meta-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .meta-field label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .meta-field input {
+            width: 100%;
+            padding: 0.55rem 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            color: var(--text-main);
+            background: #f8fafc;
+            transition: border-color 0.2s;
+        }
+
+        .meta-field input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #ffffff;
+        }
+
+        /* Tracker Actions & Summary Bar */
+        .tracker-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .progress-indicator-wrap {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .progress-bar-bg {
+            width: 180px;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: #059669;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .tracker-btn-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        /* Table Checklist Styles */
+        .tracker-tier-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tracker-tier-card h2 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin: 0 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checklist-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .checklist-table th {
+            background: #f8fafc;
+            color: var(--text-muted);
+            text-align: left;
+            padding: 0.75rem 0.85rem;
+            border-bottom: 2px solid var(--border-color);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .checklist-table td {
+            padding: 0.65rem 0.85rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        .checklist-table tr:hover td {
+            background-color: #fbfcfe;
+        }
+
+        .check-col {
+            text-align: center !important;
+            width: 60px;
+        }
+
+        .check-col input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .date-col {
+            width: 130px;
+        }
+
+        .date-col input[type="date"] {
+            padding: 0.3rem 0.4rem;
+            font-size: 0.82rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            width: 100%;
+            background: #f8fafc;
+        }
+
+        .resource-col {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            width: 220px;
+        }
+
+        .resource-col a {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Print Styling */
+        @media print {
+            @page {
+                size: letter portrait;
+                margin: 0.5in;
+            }
+            body {
+                background: #fff;
+                color: #000;
+                font-size: 8.5pt;
+            }
+            header, footer, .tracker-toolbar, .category-filter-nav, .cta-button, .hero-action-row {
+                display: none !important;
+            }
+            .tracker-page {
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+            .student-meta-card {
+                border: 1px solid #000 !important;
+                box-shadow: none !important;
+                padding: 0.5rem 0.8rem !important;
+                margin-bottom: 0.8rem !important;
+            }
+            .meta-grid {
+                grid-template-columns: repeat(4, 1fr) !important;
+                gap: 0.5rem !important;
+            }
+            .meta-field input {
+                border: none !important;
+                border-bottom: 1px solid #000 !important;
+                background: transparent !important;
+                padding: 0 !important;
+                font-size: 8.5pt !important;
+            }
+            .tracker-tier-card {
+                border: 1px solid #999 !important;
+                box-shadow: none !important;
+                padding: 0.5rem 0.8rem !important;
+                margin-bottom: 0.6rem !important;
+                page-break-inside: avoid;
+            }
+            .tracker-tier-card h2 {
+                font-size: 10pt !important;
+                margin-bottom: 0.3rem !important;
+            }
+            .checklist-table th, .checklist-table td {
+                padding: 0.25rem 0.4rem !important;
+                font-size: 8pt !important;
+                border-color: #ccc !important;
+            }
+            .checklist-table th {
+                background: #f0f0f0 !important;
+            }
+            .date-col input[type="date"] {
+                border: none !important;
+                background: transparent !important;
+                font-size: 7.5pt !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">
+                    <span class="logo-icon">📖</span> Mini-Book Maker
+                </a>
+            </div>
+            <ul>
+                <li><a href="templates.html">Browse Books</a></li>
+                <li><a href="scope-sequence.html">Scope &amp; Sequence</a></li>
+                <li><a href="tracker.html" class="active-nav">Skills Tracker</a></li>
+                <li><a href="editor.html">Custom Editor</a></li>
+                <li><a href="index.html#features">Features</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="tracker-page">
+        <!-- Title Banner -->
+        <section class="templates-hero" style="padding: 2rem 1rem 1.5rem;">
+            <div class="hero-badge">Diagnostic &amp; Progress Monitoring</div>
+            <h1 style="font-size: 2.1rem; margin-bottom: 0.4rem;">Orton-Gillingham Skills Mastery Tracker</h1>
+            <p style="font-size: 1rem; margin-bottom: 0;">Dual Read/Spell verification, date-tracked milestones, and cross-referenced decodable booklet assignments.</p>
+        </section>
+
+        <!-- Student & Portfolio Metadata Header -->
+        <div class="student-meta-card">
+            <div class="meta-grid">
+                <div class="meta-field">
+                    <label for="student-name">Student Name</label>
+                    <input type="text" id="student-name" placeholder="e.g., Alex Johnson">
+                </div>
+                <div class="meta-field">
+                    <label for="evaluator-name">Teacher / Evaluator</label>
+                    <input type="text" id="evaluator-name" placeholder="e.g., Mrs. Anderson, OG Specialist">
+                </div>
+                <div class="meta-field">
+                    <label for="start-date">Date Started</label>
+                    <input type="date" id="start-date">
+                </div>
+                <div class="meta-field">
+                    <label for="current-tier">Target Level / Tier</label>
+                    <input type="text" id="current-tier" placeholder="e.g., Tier 3: Blends &amp; Digraphs">
+                </div>
+            </div>
+        </div>
+
+        <!-- Toolbar: Actions & Live Progress Indicator -->
+        <div class="tracker-toolbar">
+            <div class="progress-indicator-wrap">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="mastery-progress-fill"></div>
+                </div>
+                <span class="progress-text" id="mastery-progress-text">0% Mastered (0/32 Skills)</span>
+            </div>
+            <div class="tracker-btn-group">
+                <button class="cta-button print-button" id="print-tracker-btn">🖨️ Print Student Log</button>
+                <button class="cta-button secondary-button" id="save-tracker-btn">💾 Save to Browser</button>
+                <button class="info-button" id="reset-tracker-btn">🔄 Clear Form</button>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TIER 1: Phonological & Phonemic Awareness -->
+        <!-- ================================================================= -->
+        <div class="tracker-tier-card">
+            <h2><span class="tier-tag tier-1-tag">Tier 1</span> Phonological &amp; Phonemic Awareness</h2>
+            <div class="table-responsive">
+                <table class="checklist-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 32%;">Target Sub-Skill</th>
+                            <th class="check-col">Read (Dec.)</th>
+                            <th class="check-col">Spell (Enc.)</th>
+                            <th class="date-col">Introduced</th>
+                            <th class="date-col">Practiced</th>
+                            <th class="date-col">Mastered</th>
+                            <th class="resource-col">Aligned Booklets</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Rhyme Recognition &amp; Generation</strong> (Identify &amp; produce rhyming pairs)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Foundations #1</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Syllable Blending &amp; Segmentation</strong> (Clap &amp; count word chunks orally)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Foundations #2</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phoneme Blending</strong> (Blend isolated sounds orally: /s/-/a/-/t/ -> sat)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Foundations #1–3</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phoneme Segmentation</strong> (Isolate beginning, middle, ending sounds)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Foundations #3–6</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Letter Sounds: Group 1</strong> (m, s, a, t)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Letter Sounds: M,S,A,T</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Letter Sounds: Group 2</strong> (b, c, i, f)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Letter Sounds: B,C,I,F</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Letter Sounds: Group 3</strong> (n, o, h, d)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Letter Sounds: N,O,H,D</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Letter Sounds: Group 4–6</strong> (g, l, e, p, r, u, j, k, w, y, x, q, z, v)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Letter Sounds: Groups 4–6</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TIER 2: CVC Words & Closed Syllables -->
+        <!-- ================================================================= -->
+        <div class="tracker-tier-card">
+            <h2><span class="tier-tag tier-2-tag">Tier 2</span> CVC Short Vowels &amp; Closed Syllables</h2>
+            <div class="table-responsive">
+                <table class="checklist-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 32%;">Target Sub-Skill</th>
+                            <th class="check-col">Read (Dec.)</th>
+                            <th class="check-col">Spell (Enc.)</th>
+                            <th class="date-col">Introduced</th>
+                            <th class="date-col">Practiced</th>
+                            <th class="date-col">Mastered</th>
+                            <th class="resource-col">Aligned Booklets</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Short a CVC</strong> (-at, -an, -am, -ap, -ag)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">The Fat Cat, Dan &amp; Fan</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Short e CVC</strong> (-en, -ed, -et, -eg)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">The Red Hen, Ben &amp; Ted</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Short i CVC</strong> (-ig, -in, -ip, -id, -it)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">The Pig with a Wig, Tim &amp; Fin</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Short o CVC</strong> (-og, -op, -ot, -ox)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Frog on a Log, Pop &amp; Mop</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Short u CVC</strong> (-ug, -un, -up, -ub, -ut)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Bug in a Rug, Cub in Tub</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mixed CVC Review &amp; Sentences</strong></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Cat &amp; Rat, Six Little Bugs</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TIER 3: Blends & Digraphs -->
+        <!-- ================================================================= -->
+        <div class="tracker-tier-card">
+            <h2><span class="tier-tag tier-3-tag">Tier 3</span> Consonant Blends &amp; Digraphs</h2>
+            <div class="table-responsive">
+                <table class="checklist-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 32%;">Target Sub-Skill</th>
+                            <th class="check-col">Read (Dec.)</th>
+                            <th class="check-col">Spell (Enc.)</th>
+                            <th class="date-col">Introduced</th>
+                            <th class="date-col">Practiced</th>
+                            <th class="date-col">Mastered</th>
+                            <th class="resource-col">Aligned Booklets</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Initial L-Blends</strong> (bl, cl, fl, gl, pl, sl)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Blue Blob, Clever Clown</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Initial R-Blends</strong> (br, cr, dr, fr, gr, pr, tr)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Brave Bear, Drum in Drizzle</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Initial S-Blends</strong> (sk, sm, sn, sp, st, sw)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Skilled Skunk, Sweet Swan</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Consonant Digraphs</strong> (sh, ch, th voiced/unvoiced, wh)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Sheep on Jeep, Chick on Bench</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Final Digraph -ck Rule</strong> (Short vowel + ck)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Duck on the Rock (-ck)</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TIER 4: VCe, Vowel Teams, Bossy R, Diphthongs -->
+        <!-- ================================================================= -->
+        <div class="tracker-tier-card">
+            <h2><span class="tier-tag tier-4-tag">Tier 4</span> Advanced Phonics (VCe, Vowel Teams, R-Controlled)</h2>
+            <div class="table-responsive">
+                <table class="checklist-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 32%;">Target Sub-Skill</th>
+                            <th class="check-col">Read (Dec.)</th>
+                            <th class="check-col">Spell (Enc.)</th>
+                            <th class="date-col">Introduced</th>
+                            <th class="date-col">Practiced</th>
+                            <th class="date-col">Mastered</th>
+                            <th class="resource-col">Aligned Booklets</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Silent E / Magic E</strong> (a_e, i_e, o_e, u_e, e_e)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Cake by Lake, Bike Hike, Mule</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vowel Teams: Long A &amp; E</strong> (ai, ay, ee, ea)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Rain on Train, Bee in Tree</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vowel Teams: Long O &amp; I</strong> (oa, oe, igh, ie)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Goat on Boat, Kite in Flight</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>R-Controlled Vowels ("Bossy R")</strong> (ar, er, ir, or, ur)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Star in Car, Bird on Fern</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Diphthongs &amp; Variant Vowels</strong> (oi/oy, ou/ow, au/aw, oo/ew)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">Coin in Soil, Moon &amp; Spoon</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TIER 5: Syllable Types & Morphology -->
+        <!-- ================================================================= -->
+        <div class="tracker-tier-card">
+            <h2><span class="tier-tag tier-5-tag">Tier 5</span> Syllable Division &amp; Morphology</h2>
+            <div class="table-responsive">
+                <table class="checklist-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 32%;">Target Sub-Skill</th>
+                            <th class="check-col">Read (Dec.)</th>
+                            <th class="check-col">Spell (Enc.)</th>
+                            <th class="date-col">Introduced</th>
+                            <th class="date-col">Practiced</th>
+                            <th class="date-col">Mastered</th>
+                            <th class="resource-col">Aligned Booklets</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Six Syllable Types</strong> (Closed, Open, VCe, Vowel Team, R-Controlled, -C-le)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="scope-sequence.html">Scope &amp; Sequence Map</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Inflectional Suffixes</strong> (-s, -es, -ed [3 sounds], -ing)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">The Helpful Rabbit</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Derivational Affixes</strong> (un-, re-, -ful, -less)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="templates.html">The Helpful Rabbit</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Spelling Rules</strong> (Doubling rule, Drop silent-e before vowel suffixes)</td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="check-col"><input type="checkbox" class="skill-check"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="date-col"><input type="date"></td>
+                            <td class="resource-col"><a href="editor.html">Custom Morphology Builder</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Mini-Book Maker. Free &amp; open-source diagnostic and instructional tools for structured literacy.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Interactive Mastery Tracker Persistence & Calculations
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.skill-check');
+            const progressFill = document.getElementById('mastery-progress-fill');
+            const progressText = document.getElementById('mastery-progress-text');
+            const printBtn = document.getElementById('print-tracker-btn');
+            const saveBtn = document.getElementById('save-tracker-btn');
+            const resetBtn = document.getElementById('reset-tracker-btn');
+
+            function updateProgress() {
+                const totalPairs = document.querySelectorAll('tbody tr').length;
+                let masteredCount = 0;
+
+                document.querySelectorAll('tbody tr').forEach(row => {
+                    const checks = row.querySelectorAll('.skill-check');
+                    if (checks.length === 2 && checks[0].checked && checks[1].checked) {
+                        masteredCount++;
+                    }
+                });
+
+                const percentage = totalPairs > 0 ? Math.round((masteredCount / totalPairs) * 100) : 0;
+                if (progressFill) progressFill.style.width = `${percentage}%`;
+                if (progressText) progressText.textContent = `${percentage}% Mastered (${masteredCount}/${totalPairs} Skills)`;
+            }
+
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', updateProgress);
+            });
+
+            // LocalStorage Save & Load
+            const STORAGE_KEY = 'minibook_og_tracker_state';
+
+            function saveState() {
+                const data = {
+                    studentName: document.getElementById('student-name').value,
+                    evaluatorName: document.getElementById('evaluator-name').value,
+                    startDate: document.getElementById('start-date').value,
+                    currentTier: document.getElementById('current-tier').value,
+                    checks: Array.from(checkboxes).map(cb => cb.checked),
+                    dates: Array.from(document.querySelectorAll('.date-col input')).map(d => d.value)
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                alert('Student progress successfully saved to your browser!');
+            }
+
+            function loadState() {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    try {
+                        const data = JSON.parse(saved);
+                        if (data.studentName) document.getElementById('student-name').value = data.studentName;
+                        if (data.evaluatorName) document.getElementById('evaluator-name').value = data.evaluatorName;
+                        if (data.startDate) document.getElementById('start-date').value = data.startDate;
+                        if (data.currentTier) document.getElementById('current-tier').value = data.currentTier;
+
+                        if (data.checks && data.checks.length === checkboxes.length) {
+                            checkboxes.forEach((cb, idx) => cb.checked = data.checks[idx]);
+                        }
+                        const dateInputs = document.querySelectorAll('.date-col input');
+                        if (data.dates && data.dates.length === dateInputs.length) {
+                            dateInputs.forEach((d, idx) => d.value = data.dates[idx]);
+                        }
+                        updateProgress();
+                    } catch (e) {
+                        console.error('Error loading saved tracker state', e);
+                    }
+                }
+            }
+
+            if (saveBtn) saveBtn.addEventListener('click', saveState);
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                    if (confirm('Are you sure you want to clear this student tracker form?')) {
+                        document.getElementById('student-name').value = '';
+                        document.getElementById('evaluator-name').value = '';
+                        document.getElementById('start-date').value = '';
+                        document.getElementById('current-tier').value = '';
+                        checkboxes.forEach(cb => cb.checked = false);
+                        document.querySelectorAll('.date-col input').forEach(d => d.value = '');
+                        localStorage.removeItem(STORAGE_KEY);
+                        updateProgress();
+                    }
+                });
+            }
+
+            if (printBtn) {
+                printBtn.addEventListener('click', () => {
+                    window.print();
+                });
+            }
+
+            loadState();
+        });
+    </script>
+</body>
+</html>

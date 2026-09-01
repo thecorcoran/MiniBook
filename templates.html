@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini-Book Library | Printable 8-Page Foldable Books</title>
+    <title>Mini-Book Library | Orton-Gillingham Decodables</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
 </head>
@@ -17,8 +17,9 @@
             </div>
             <ul>
                 <li><a href="templates.html" class="active-nav">Browse Books</a></li>
+                <li><a href="scope-sequence.html">Scope &amp; Sequence</a></li>
+                <li><a href="tracker.html">Skills Tracker</a></li>
                 <li><a href="editor.html">Custom Editor</a></li>
-                <li><a href="#" id="open-instructions-link">Folding Guide</a></li>
                 <li><a href="index.html#features">Features</a></li>
             </ul>
         </nav>
@@ -27,11 +28,13 @@
     <main class="catalog-page">
         <!-- Catalog Hero Section -->
         <section class="templates-hero">
-            <div class="hero-badge">✨ 68 Free Printable Titles</div>
-            <h1>Mini-Book Library</h1>
-            <p>One-sheet printable 8-page decodable books for early readers. Download print-ready PDFs or customize in the editor.</p>
+            <div class="hero-badge">✨ 74 Free Orton-Gillingham Aligned Titles</div>
+            <h1>Decodable Mini-Book Library</h1>
+            <p>Systematic 8-page decodables organized along a structured literacy ladder. Print on a single sheet of paper, cut, and fold.</p>
             
             <div class="hero-action-row">
+                <a href="scope-sequence.html" class="cta-button secondary-button">🗺️ View Scope &amp; Sequence</a>
+                <a href="tracker.html" class="cta-button secondary-button">📊 Skills Mastery Tracker</a>
                 <button id="open-instructions-btn" class="cta-button secondary-button">✂️ How to Cut &amp; Fold</button>
             </div>
         </section>
@@ -40,54 +43,84 @@
         <nav class="category-filter-nav" aria-label="Book Collections Filter">
             <div class="category-tabs-container">
                 <button class="category-tab-btn active-tab" data-category="all">
-                    <span class="tab-icon">🌟</span> All Collections <span class="tab-count">68</span>
+                    <span class="tab-icon">🌟</span> All Collections <span class="tab-count">74</span>
+                </button>
+                <button class="category-tab-btn" data-category="foundations">
+                    <span class="tab-icon">🌱</span> Tier 1: Foundations <span class="tab-count">6</span>
                 </button>
                 <button class="category-tab-btn" data-category="learn-to-read">
-                    <span class="tab-icon">📚</span> Learn to Read Kits <span class="tab-count">24</span>
+                    <span class="tab-icon">📚</span> Tier 2: CVC Words <span class="tab-count">24</span>
                 </button>
                 <button class="category-tab-btn" data-category="blends">
-                    <span class="tab-icon">🔤</span> Blends &amp; Digraphs <span class="tab-count">24</span>
+                    <span class="tab-icon">🔤</span> Tier 3: Blends &amp; Digraphs <span class="tab-count">24</span>
+                </button>
+                <button class="category-tab-btn" data-category="advanced">
+                    <span class="tab-icon">✨</span> Tier 4: VCe &amp; Teams <span class="tab-count">20</span>
                 </button>
                 <button class="category-tab-btn" data-category="find-it">
-                    <span class="tab-icon">🎨</span> Find It, Draw It <span class="tab-count">20</span>
+                    <span class="tab-icon">🎨</span> Supplement: Draw It <span class="tab-count">20</span>
                 </button>
             </div>
         </nav>
 
         <!-- Book Collections Horizontal Showcase -->
         <div class="book-categories-container">
-            <!-- Collection 1: Learn to Read Kits -->
+            <!-- Tier 1: Foundations -->
+            <section id="foundations-books" class="book-collection-section foundations-theme">
+                <div class="collection-header">
+                    <div class="collection-title-wrap">
+                        <div class="collection-badge">Tier 1: Foundations</div>
+                        <h2>🌱 Letter Sounds &amp; Phonemic Awareness</h2>
+                    </div>
+                    <p class="category-subtitle">High-frequency letter-sound correspondence (m, s, a, t sequence) for early blending.</p>
+                </div>
+                <div class="template-cards" id="foundations-books-container"></div>
+            </section>
+
+            <!-- Tier 2: Learn to Read Kits (CVC) -->
             <section id="rhyming-books" class="book-collection-section learn-to-read-theme">
                 <div class="collection-header">
                     <div class="collection-title-wrap">
-                        <div class="collection-badge">Phonics Levels 1–6</div>
-                        <h2>📚 Learn to Read Kits</h2>
+                        <div class="collection-badge">Tier 2: Closed Syllables</div>
+                        <h2>📚 Learn to Read Kits (CVC Short Vowels)</h2>
                     </div>
-                    <p class="category-subtitle">Systematic decodable stories focusing on CVC word families and short vowels.</p>
+                    <p class="category-subtitle">Systematic decodable stories focusing on short vowels (a, e, i, o, u) and word families.</p>
                 </div>
                 <div class="template-cards" id="rhyming-books-container"></div>
             </section>
 
-            <!-- Collection 2: Blends and Segments -->
+            <!-- Tier 3: Blends & Digraphs -->
             <section id="blends-and-segments-books" class="book-collection-section blends-theme">
                 <div class="collection-header">
                     <div class="collection-title-wrap">
-                        <div class="collection-badge">Consonant Clusters</div>
+                        <div class="collection-badge">Tier 3: Consonant Clusters</div>
                         <h2>🔤 Blends &amp; Digraphs Books</h2>
                     </div>
-                    <p class="category-subtitle">Targeted phonetic practice for initial L/R/S blends and digraphs (ch, sh, th, wh, ck).</p>
+                    <p class="category-subtitle">Targeted phonetic practice for initial L/R/S blends and digraphs (sh, ch, th, wh, ck).</p>
                 </div>
                 <div class="template-cards" id="blends-and-segments-books-container"></div>
             </section>
 
-            <!-- Collection 3: Find It, Draw It -->
+            <!-- Tier 4: Advanced Phonics (VCe & Vowel Teams) -->
+            <section id="advanced-phonics-books" class="book-collection-section advanced-theme">
+                <div class="collection-header">
+                    <div class="collection-title-wrap">
+                        <div class="collection-badge">Tier 4: VCe &amp; Vowel Teams</div>
+                        <h2>✨ Advanced Phonics (Silent E, Teams &amp; Bossy R)</h2>
+                    </div>
+                    <p class="category-subtitle">Silent-E long vowels (a_e, i_e, o_e, u_e), vowel teams (ai, ee, oa, igh), diphthongs (oi, ou, aw), and R-controlled vowels.</p>
+                </div>
+                <div class="template-cards" id="advanced-phonics-books-container"></div>
+            </section>
+
+            <!-- Supplement: Find It, Draw It -->
             <section id="find-it-draw-it-books" class="book-collection-section find-it-theme">
                 <div class="collection-header">
                     <div class="collection-title-wrap">
-                        <div class="collection-badge">Interactive Prompts</div>
+                        <div class="collection-badge">Fine Motor Supplement</div>
                         <h2>🎨 Find It, Draw It Books</h2>
                     </div>
-                    <p class="category-subtitle">Observation and fine-motor drawing activities connecting words to real-world objects.</p>
+                    <p class="category-subtitle">Cross-cutting observation and drawing activities that pair with any phonics tier.</p>
                 </div>
                 <div class="template-cards" id="find-it-draw-it-books-container"></div>
             </section>
@@ -114,7 +147,7 @@
 
     <footer>
         <div class="footer-content">
-            <p>&copy; 2025 Mini-Book Maker. Free &amp; open-source printable resources for early literacy.</p>
+            <p>&copy; 2025 Mini-Book Maker. Free &amp; open-source printable resources for Orton-Gillingham and structured literacy instruction.</p>
         </div>
     </footer>
 

@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let customBookData = {};
 
         if (templateType === '8-page') {
-            pageLayout = ['Page 4', 'Page 5', 'Page 6', 'Page 7', 'Page 3', 'Page 2', 'Page 1', 'Back Cover'];
+            pageLayout = ['Page 4', 'Page 5', 'Page 6', 'Page 7', 'Page 3', 'Page 2', 'Back Cover', 'Page 1'];
             pageRotations = pageRotations8Page;
             pageGrid.style.gridTemplateColumns = 'repeat(4, 1fr)';
             pageGrid.style.gridTemplateRows = 'repeat(2, 1fr)';
@@ -96,12 +96,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Unify book data lookup across all categories
+        // Unify book data lookup across all categories and tiers
         const allBooks = {
+            ...(typeof foundationsBooks !== 'undefined' ? foundationsBooks : {}),
             ...(typeof learnToReadBooks !== 'undefined' ? learnToReadBooks : {}),
             ...(typeof rhymingBooks !== 'undefined' ? rhymingBooks : {}),
             ...(typeof blendsAndSegmentsBooks !== 'undefined' ? blendsAndSegmentsBooks : {}),
-            ...(typeof findItDrawItBooks !== 'undefined' ? findItDrawItBooks : {})
+            ...(typeof advancedPhonicsBooks !== 'undefined' ? advancedPhonicsBooks : {}),
+            ...(typeof findItDrawItBooks !== 'undefined' ? findItDrawItBooks : {}),
+            ...(typeof allBooksRegistry !== 'undefined' ? allBooksRegistry : {})
         };
 
         const bookData = book ? (allBooks[book] || customBookData) : customBookData;
@@ -127,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 textBox.setAttribute('contenteditable', 'true');
 
                 if (isCover || isBackCover) {
-                    // Centered on page
+                    // Centered on page horizontally and vertically
                     textBox.style.textAlign = 'center';
                     textBox.style.fontWeight = 'bold';
                     textBox.style.fontSize = '1.15rem';

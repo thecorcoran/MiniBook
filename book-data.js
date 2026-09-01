@@ -1,9 +1,91 @@
-// Mini-Book Maker Complete Book Data Collections
+// Mini-Book Maker: Orton-Gillingham Decodable Curriculum Database
 
-// 1. Learn to Read Kits: Systematic, leveled decodable readers (CVC word families & short vowels)
+// ============================================================================
+// TIER 1: Foundations (Letter-Sound Correspondence & High-Frequency Order)
+// ============================================================================
+const foundationsBooks = {
+    'letters_group1': {
+        'Tier': 'Tier 1: Foundations',
+        'Focus': 'm, s, a, t',
+        'Cover': 'Letter Sounds: M, S, A, T',
+        'Story1': 'M says /m/ as in mat and map.',
+        'Story2': 'S says /s/ as in sun and sat.',
+        'Story3': 'A says /a/ as in apple and ant.',
+        'Story4': 'T says /t/ as in top and ten.',
+        'Story5': 'Blend them together: s-a-t -> sat.',
+        'Story6': 'Blend them together: m-a-t -> mat.',
+        'TheEnd': 'The End'
+    },
+    'letters_group2': {
+        'Tier': 'Tier 1: Foundations',
+        'Focus': 'b, c, i, f',
+        'Cover': 'Letter Sounds: B, C, I, F',
+        'Story1': 'B says /b/ as in bat and bug.',
+        'Story2': 'C says /k/ as in cat and cup.',
+        'Story3': 'I says /i/ as in igloo and in.',
+        'Story4': 'F says /f/ as in fan and fox.',
+        'Story5': 'Blend them together: f-i-t -> fit.',
+        'Story6': 'Blend them together: b-a-t -> bat.',
+        'TheEnd': 'The End'
+    },
+    'letters_group3': {
+        'Tier': 'Tier 1: Foundations',
+        'Focus': 'n, o, h, d',
+        'Cover': 'Letter Sounds: N, O, H, D',
+        'Story1': 'N says /n/ as in nut and net.',
+        'Story2': 'O says /o/ as in octopus and on.',
+        'Story3': 'H says /h/ as in hat and hen.',
+        'Story4': 'D says /d/ as in dog and den.',
+        'Story5': 'Blend them together: h-o-t -> hot.',
+        'Story6': 'Blend them together: d-o-t -> dot.',
+        'TheEnd': 'The End'
+    },
+    'letters_group4': {
+        'Tier': 'Tier 1: Foundations',
+        'Focus': 'g, l, e, p',
+        'Cover': 'Letter Sounds: G, L, E, P',
+        'Story1': 'G says /g/ as in gum and gas.',
+        'Story2': 'L says /l/ as in log and leg.',
+        'Story3': 'E says /e/ as in egg and elephant.',
+        'Story4': 'P says /p/ as in pig and pot.',
+        'Story5': 'Blend them together: p-e-t -> pet.',
+        'Story6': 'Blend them together: l-e-g -> leg.',
+        'TheEnd': 'The End'
+    },
+    'letters_group5': {
+        'Tier': 'Tier 1: Foundations',
+        'Focus': 'r, u, j, k',
+        'Cover': 'Letter Sounds: R, U, J, K',
+        'Story1': 'R says /r/ as in red and rug.',
+        'Story2': 'U says /u/ as in umbrella and up.',
+        'Story3': 'J says /j/ as in jam and jug.',
+        'Story4': 'K says /k/ as in kid and kit.',
+        'Story5': 'Blend them together: r-u-n -> run.',
+        'Story6': 'Blend them together: j-u-g -> jug.',
+        'TheEnd': 'The End'
+    },
+    'letters_group6': {
+        'Tier': 'Tier 1: Foundations',
+        'Focus': 'w, y, x, q, z, v',
+        'Cover': 'Letter Sounds: W, Y, X, Q, Z, V',
+        'Story1': 'W says /w/ as in wig and wet.',
+        'Story2': 'Y says /y/ as in yak and yes.',
+        'Story3': 'V says /v/ as in van and vet.',
+        'Story4': 'Z says /z/ as in zip and zoo.',
+        'Story5': 'X says /ks/ as in box and fox.',
+        'Story6': 'Q and U say /kw/ as in quick.',
+        'TheEnd': 'The End'
+    }
+};
+
+// ============================================================================
+// TIER 2: CVC Words & Closed Syllables (Short Vowels, Levels 1–6)
+// ============================================================================
 const learnToReadBooks = {
-    // Level 1: Short A Word Families
+    // Level 1: Short A
     'fat_cat': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short a (-at)',
         'Cover': 'The Fat Cat',
         'Story1': 'A fat cat sat on a mat.',
         'Story2': 'He had a nap and a pat.',
@@ -14,6 +96,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'dan_and_fan': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short a (-an)',
         'Cover': 'Dan and the Fan',
         'Story1': 'Dan has a big tan van.',
         'Story2': 'Dan ran with a black pan.',
@@ -24,6 +108,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'sam_and_jam': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short a (-am)',
         'Cover': 'Sam and the Jam',
         'Story1': 'Sam is a little ram.',
         'Story2': 'Sam loves sweet red jam.',
@@ -34,6 +120,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'max_and_cap': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short a (-ap, -ax)',
         'Cover': 'Max and His Cap',
         'Story1': 'Max the cat had a red cap.',
         'Story2': 'Max sat on a big soft lap.',
@@ -44,6 +132,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'tag_and_bag': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short a (-ag)',
         'Cover': 'Tag and the Bag',
         'Story1': 'Tag is a pup with a rag.',
         'Story2': 'Tag has a shiny red tag.',
@@ -54,8 +144,10 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
 
-    // Level 2: Short E Word Families
+    // Level 2: Short E
     'red_hen': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short e (-en)',
         'Cover': 'The Red Hen',
         'Story1': 'A red hen had a pen.',
         'Story2': 'She lived with ten men.',
@@ -66,6 +158,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'ben_and_ted': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short e (-ed)',
         'Cover': 'Ben and Ted',
         'Story1': 'Ben has a little red bed.',
         'Story2': 'Ted has a cap on his head.',
@@ -76,6 +170,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'wet_pet': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short e (-et)',
         'Cover': 'The Wet Pet',
         'Story1': 'Meg has a little pet.',
         'Story2': 'Meg met a vet named Brett.',
@@ -86,6 +182,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'peg_and_egg': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short e (-eg)',
         'Cover': 'Peg and the Egg',
         'Story1': 'Peg has a hen with a leg.',
         'Story2': 'The hen sat on a peg.',
@@ -96,8 +194,10 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
 
-    // Level 3: Short I Word Families
+    // Level 3: Short I
     'pig_with_wig': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short i (-ig)',
         'Cover': 'The Pig with a Wig',
         'Story1': 'A pig had a big wig.',
         'Story2': 'He did a little jig.',
@@ -108,6 +208,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'tim_and_fin': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short i (-in)',
         'Cover': 'Tim and the Fin',
         'Story1': 'Tim had a little tin bin.',
         'Story2': 'In the bin was a pin.',
@@ -118,6 +220,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'pip_the_pup': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short i (-ip)',
         'Cover': 'Pip Takes a Trip',
         'Story1': 'Pip went to the big ship.',
         'Story2': 'Pip had a cold cup to sip.',
@@ -128,6 +232,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'kid_and_lid': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short i (-id, -it)',
         'Cover': 'The Kid and the Lid',
         'Story1': 'A kid had a tin lid.',
         'Story2': 'The kid ran and hid.',
@@ -138,8 +244,10 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
 
-    // Level 4: Short O Word Families
+    // Level 4: Short O
     'frog_on_log': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short o (-og)',
         'Cover': 'A Frog on a Log',
         'Story1': 'A frog sat on a log in the fog.',
         'Story2': 'He saw a dog go for a jog.',
@@ -150,6 +258,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'pop_and_mop': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short o (-op)',
         'Cover': 'Pop and the Mop',
         'Story1': 'Pop has a big wet mop.',
         'Story2': 'Pop went to the top shop.',
@@ -160,6 +270,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'dot_and_pot': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short o (-ot, -ox)',
         'Cover': 'Dot and the Pot',
         'Story1': 'Dot the fox had a pot.',
         'Story2': 'The pot was very hot.',
@@ -170,8 +282,10 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
 
-    // Level 5: Short U Word Families
+    // Level 5: Short U
     'bug_in_rug': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short u (-ug)',
         'Cover': 'A Bug in a Rug',
         'Story1': 'A little bug was snug in a rug.',
         'Story2': 'He had a mug and a jug.',
@@ -182,6 +296,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'pup_in_sun': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short u (-un, -up)',
         'Cover': 'Pup in the Sun',
         'Story1': 'Pup loves to run in the sun.',
         'Story2': 'Pup ate a hot dog bun.',
@@ -192,6 +308,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'cub_in_tub': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short u (-ub, -ud)',
         'Cover': 'The Cub in the Tub',
         'Story1': 'A cub got stuck in the mud.',
         'Story2': 'The mud went thud-thud-thud.',
@@ -202,6 +320,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'nut_in_hut': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'Short u (-ut)',
         'Cover': 'The Nut in the Hut',
         'Story1': 'A nut was in a small hut.',
         'Story2': 'A squirrel kept the door shut.',
@@ -214,6 +334,8 @@ const learnToReadBooks = {
 
     // Level 6: Review & Word Family Fun
     'cat_and_rat': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'CVC Mixed Review',
         'Cover': 'The Cat and the Rat',
         'Story1': 'A black cat had a nap.',
         'Story2': 'A fat rat ran past fast.',
@@ -224,6 +346,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'hen_in_pen': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'CVC Mixed Review',
         'Cover': 'The Hen in the Pen',
         'Story1': 'A red hen had a pen.',
         'Story2': 'She met ten friendly men.',
@@ -234,6 +358,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'dog_and_pup': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'CVC Mixed Review',
         'Cover': 'The Dog and the Pup',
         'Story1': 'A big dog woke right up.',
         'Story2': 'He drank milk from a cup.',
@@ -244,6 +370,8 @@ const learnToReadBooks = {
         'TheEnd': 'The End'
     },
     'six_little_bugs': {
+        'Tier': 'Tier 2: CVC Short Vowels',
+        'Focus': 'CVC Mixed Review',
         'Cover': 'Six Little Bugs',
         'Story1': 'Six little bugs on a twig.',
         'Story2': 'One wore a funny big wig.',
@@ -255,13 +383,16 @@ const learnToReadBooks = {
     }
 };
 
-// Aliased for backward compatibility
 const rhymingBooks = learnToReadBooks;
 
-// 2. Blends and Segments: Systematic phonics readers for consonant blends & digraphs
+// ============================================================================
+// TIER 3: Blends & Digraphs (Consonant Clusters & Multiletter Phonograms)
+// ============================================================================
 const blendsAndSegmentsBooks = {
     // L-Blends
     'bl_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial L-Blend (bl-)',
         'Cover': 'The Blue Blob (bl-)',
         'Story1': 'A blue blob blows bubbles.',
         'Story2': 'The bubbles are big and blue.',
@@ -272,6 +403,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'cl_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial L-Blend (cl-)',
         'Cover': 'The Clever Clown (cl-)',
         'Story1': 'A clown has a big clock.',
         'Story2': 'The clock clicks and clacks.',
@@ -282,6 +415,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'fl_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial L-Blend (fl-)',
         'Cover': 'The Flying Flag (fl-)',
         'Story1': 'A flag is on the floor.',
         'Story2': 'It is flat and flimsy.',
@@ -292,6 +427,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'gl_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial L-Blend (gl-)',
         'Cover': 'The Glad Gladiator (gl-)',
         'Story1': 'A glad gladiator gleams.',
         'Story2': 'His golden armor is glorious.',
@@ -302,6 +439,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'pl_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial L-Blend (pl-)',
         'Cover': 'The Playful Puppy (pl-)',
         'Story1': 'A playful puppy plays.',
         'Story2': 'He has a clever plan.',
@@ -312,6 +451,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'sl_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial L-Blend (sl-)',
         'Cover': 'The Slimy Slug (sl-)',
         'Story1': 'A slimy slug slides along.',
         'Story2': 'He is very slow.',
@@ -324,6 +465,8 @@ const blendsAndSegmentsBooks = {
 
     // R-Blends
     'br_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial R-Blend (br-)',
         'Cover': 'The Brave Brown Bear (br-)',
         'Story1': 'A brave brown bear brings berries.',
         'Story2': 'The berries are bright red.',
@@ -334,6 +477,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'cr_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial R-Blend (cr-)',
         'Cover': 'The Crab and the Crow (cr-)',
         'Story1': 'A crab crawls on the crisp sand.',
         'Story2': 'A crow caws from a crown tree.',
@@ -344,6 +489,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'dr_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial R-Blend (dr-)',
         'Cover': 'The Drum in the Drizzle (dr-)',
         'Story1': 'A drum gets wet in the drizzle.',
         'Story2': 'The drum dreams of being dry.',
@@ -354,6 +501,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'fr_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial R-Blend (fr-)',
         'Cover': 'The Frog with a Friend (fr-)',
         'Story1': 'A frog has a friendly friend.',
         'Story2': 'The friend is a fruit fly.',
@@ -364,6 +513,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'gr_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial R-Blend (gr-)',
         'Cover': 'The Great Green Grape (gr-)',
         'Story1': 'A great green grape grows.',
         'Story2': 'The grape is grand and green.',
@@ -374,6 +525,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'pr_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial R-Blend (pr-)',
         'Cover': 'The Proud Prince (pr-)',
         'Story1': 'A proud prince has a prize.',
         'Story2': 'The prize is a pretty pretzel.',
@@ -384,6 +537,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'tr_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial R-Blend (tr-)',
         'Cover': 'The Train on the Track (tr-)',
         'Story1': 'A train travels on the track.',
         'Story2': 'The train carries a treasure trunk.',
@@ -396,6 +551,8 @@ const blendsAndSegmentsBooks = {
 
     // S-Blends
     'sk_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial S-Blend (sk-)',
         'Cover': 'The Skilled Skunk (sk-)',
         'Story1': 'A skilled skunk can skate.',
         'Story2': 'He has a swift skateboard.',
@@ -406,6 +563,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'sm_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial S-Blend (sm-)',
         'Cover': 'The Small Snail (sm-)',
         'Story1': 'A small snail smiles a smile.',
         'Story2': 'He is smart and smooth.',
@@ -416,6 +575,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'sn_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial S-Blend (sn-)',
         'Cover': 'The Sneaky Snake (sn-)',
         'Story1': 'A sneaky snake snacks on seeds.',
         'Story2': 'He has a snack in the snow.',
@@ -426,6 +587,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'sp_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial S-Blend (sp-)',
         'Cover': 'The Sporty Spider (sp-)',
         'Story1': 'A sporty spider spins a web.',
         'Story2': 'He has a special spot.',
@@ -436,6 +599,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'st_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial S-Blend (st-)',
         'Cover': 'The Star on the Stage (st-)',
         'Story1': 'A star stands on the stage.',
         'Story2': 'She has a sturdy staff.',
@@ -446,6 +611,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'sw_blend': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Initial S-Blend (sw-)',
         'Cover': 'The Sweet Swan (sw-)',
         'Story1': 'A sweet swan swims swiftly.',
         'Story2': 'She swims in the sweet swamp.',
@@ -458,6 +625,8 @@ const blendsAndSegmentsBooks = {
 
     // Digraphs & Segments
     'ch_segment': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Digraph (ch-)',
         'Cover': 'The Chick on the Bench (ch-)',
         'Story1': 'A cheerful chick sits on a bench.',
         'Story2': 'He eats a cherry for lunch.',
@@ -468,6 +637,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'sh_segment': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Digraph (sh-)',
         'Cover': 'The Sheep on the Jeep (sh-)',
         'Story1': 'A shiny sheep is on a jeep.',
         'Story2': 'She has a shiny sea shell.',
@@ -478,6 +649,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'th_segment': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Digraph (th-)',
         'Cover': 'The Thing on the Thorn (th-)',
         'Story1': 'A little thing is on a thorn.',
         'Story2': 'It is thin and thankful.',
@@ -488,6 +661,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'wh_segment': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Digraph (wh-)',
         'Cover': 'The White Whale (wh-)',
         'Story1': 'A white whale swims in the waves.',
         'Story2': 'The whale makes a quiet whisper.',
@@ -498,6 +673,8 @@ const blendsAndSegmentsBooks = {
         'TheEnd': 'The End'
     },
     'ck_segment': {
+        'Tier': 'Tier 3: Blends & Digraphs',
+        'Focus': 'Final Digraph (-ck)',
         'Cover': 'The Duck on the Rock (-ck)',
         'Story1': 'A black duck sat on a rock.',
         'Story2': 'He heard a ticking clock.',
@@ -509,9 +686,268 @@ const blendsAndSegmentsBooks = {
     }
 };
 
-// 3. Find It, Draw It: Interactive observation & fine-motor drawing prompts
+// ============================================================================
+// TIER 4: Advanced Phonics (VCe Silent-E, Vowel Teams, Bossy R, Diphthongs)
+// ============================================================================
+const advancedPhonicsBooks = {
+    // VCe / Silent E (Magic E)
+    'cake_by_lake': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Silent E (a_e)',
+        'Cover': 'The Cake by the Lake',
+        'Story1': 'A snake sat by the wide blue lake.',
+        'Story2': 'He saw a sweet cake to bake.',
+        'Story3': 'He made a brave dash to take.',
+        'Story4': 'He made a silly mistake.',
+        'Story5': 'The cake was made for baby Jake.',
+        'Story6': 'What a funny cake by the lake!',
+        'TheEnd': 'The End'
+    },
+    'bike_and_hike': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Silent E (i_e)',
+        'Cover': "Mike's Bike Hike",
+        'Story1': 'Mike went on a five-mile hike.',
+        'Story2': 'He rode on his shiny white bike.',
+        'Story3': 'He saw a cute dog named Spike.',
+        'Story4': 'They rode up the mountain pike.',
+        'Story5': 'They both smiled alike.',
+        'Story6': 'What a fine bike hike for Mike!',
+        'TheEnd': 'The End'
+    },
+    'mole_in_hole': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Silent E (o_e)',
+        'Cover': 'The Mole in the Hole',
+        'Story1': 'A mole lived inside his home hole.',
+        'Story2': 'He went on a sunny stroll.',
+        'Story3': 'He wore a red coat like a stole.',
+        'Story4': 'He ate sweet berries in a bowl.',
+        'Story5': 'He was a happy gentle soul.',
+        'Story6': 'What a funny little mole!',
+        'TheEnd': 'The End'
+    },
+    'mule_and_flute': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Silent E (u_e)',
+        'Cover': 'The Mule with a Flute',
+        'Story1': 'A mule had a shiny silver flute.',
+        'Story2': 'The mule was very cute.',
+        'Story3': 'He played a merry tune on his flute.',
+        'Story4': 'He wore a dapper brown suit.',
+        'Story5': 'He ate a bite of juicy fruit.',
+        'Story6': 'What a musical little mule!',
+        'TheEnd': 'The End'
+    },
+    'pete_the_athlete': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Silent E (e_e)',
+        'Cover': 'Pete the Athlete',
+        'Story1': 'Pete ran down the long street.',
+        'Story2': 'He wore clean shoes on his feet.',
+        'Story3': 'He competed in the summer meet.',
+        'Story4': 'He did not concede defeat.',
+        'Story5': 'He won the race complete.',
+        'Story6': 'What an athlete named Pete!',
+        'TheEnd': 'The End'
+    },
+
+    // Vowel Teams
+    'rain_on_train': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Vowel Teams (ai, ay)',
+        'Cover': 'The Rain on the Train',
+        'Story1': 'Gray rain fell on the train.',
+        'Story2': 'The train sped across the plain.',
+        'Story3': 'A snail looked through the glass pane.',
+        'Story4': 'He saw the conductor hold his cane.',
+        'Story5': 'The train did not complain.',
+        'Story6': 'Through the storm sped the train.',
+        'TheEnd': 'The End'
+    },
+    'bee_in_tree': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Vowel Teams (ee, ea)',
+        'Cover': 'The Bee in the Tree',
+        'Story1': 'A queen bee lived in a green tree.',
+        'Story2': 'She flew over the deep blue sea.',
+        'Story3': 'She drank sweet nectar with glee.',
+        'Story4': 'She sat on a blooming sweet pea.',
+        'Story5': 'She was as happy as could be.',
+        'Story6': 'Buzz along, sweet queen bee!',
+        'TheEnd': 'The End'
+    },
+    'boat_and_goat': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Vowel Teams (oa, oe)',
+        'Cover': 'The Goat on the Boat',
+        'Story1': 'A goat wore a yellow rain coat.',
+        'Story2': 'He sailed on a sturdy wooden boat.',
+        'Story3': 'He made the little boat float.',
+        'Story4': 'He threw a tiny wooden float.',
+        'Story5': 'He smiled across the ocean moat.',
+        'Story6': 'Sailing high was the happy goat!',
+        'TheEnd': 'The End'
+    },
+    'night_in_flight': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Vowel Teams (igh, ie)',
+        'Cover': 'The Kite in Flight',
+        'Story1': 'A bright kite flew high at night.',
+        'Story2': 'It reached a great starry height.',
+        'Story3': 'The full moon was shining bright.',
+        'Story4': 'The kite held on tight in flight.',
+        'Story5': 'It was a truly pretty sight.',
+        'Story6': 'High above in the calm night.',
+        'TheEnd': 'The End'
+    },
+    'pie_and_tie': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Vowel Teams (ie, igh)',
+        'Cover': 'The Pie with a Tie',
+        'Story1': 'A crow flew high in the sky.',
+        'Story2': 'He wore a bright red neck tie.',
+        'Story3': 'He saw a fresh apple pie.',
+        'Story4': 'He gave a joyful little cry.',
+        'Story5': 'He said, "Oh my, what a pie!"',
+        'Story6': 'And he ate the sweet apple pie.',
+        'TheEnd': 'The End'
+    },
+
+    // R-Controlled Vowels ("Bossy R")
+    'star_in_car': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'R-Controlled (ar)',
+        'Cover': 'The Star in the Car',
+        'Story1': 'A little star traveled far.',
+        'Story2': 'He sat inside a speedy car.',
+        'Story3': 'He drove past a glass jar.',
+        'Story4': 'He played a song on his guitar.',
+        'Story5': 'He drove under a cedar bar.',
+        'Story6': 'Shine on, little driving star!',
+        'TheEnd': 'The End'
+    },
+    'bird_and_fern': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'R-Controlled (er, ir, ur)',
+        'Cover': 'The Bird on the Fern',
+        'Story1': 'A chirping bird sat on a green fern.',
+        'Story2': 'He watched the water wheel turn.',
+        'Story3': 'He had a lot of things to learn.',
+        'Story4': 'He found a sweet berry in return.',
+        'Story5': 'He perched on an old stone urn.',
+        'Story6': 'Sing your song, bird on the fern!',
+        'TheEnd': 'The End'
+    },
+    'corn_on_horn': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'R-Controlled (or, ore)',
+        'Cover': 'The Corn on the Horn',
+        'Story1': 'A goat woke early in the morn.',
+        'Story2': 'He found a yellow ear of corn.',
+        'Story3': 'A ribbon was on his curled horn.',
+        'Story4': 'He ran past the prickly thorn.',
+        'Story5': 'A brand new sunny day was born.',
+        'Story6': 'Enjoy your tasty yellow corn!',
+        'TheEnd': 'The End'
+    },
+    'turtle_in_surf': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'R-Controlled (ur, er)',
+        'Cover': 'The Turtle in the Surf',
+        'Story1': 'A green turtle swam in the surf.',
+        'Story2': 'He crawled up on the sandy turf.',
+        'Story3': 'He met a gentle ocean smurf.',
+        'Story4': 'He swam with great power and mirth.',
+        'Story5': 'He loved the ocean on the Earth.',
+        'Story6': 'Swim safe in the rolling surf!',
+        'TheEnd': 'The End'
+    },
+
+    // Diphthongs & Variant Vowels
+    'coin_in_soil': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Diphthong (oi, oy)',
+        'Cover': 'The Coin in the Soil',
+        'Story1': 'A joyful boy dug in the moist soil.',
+        'Story2': 'He found a coin wrapped in foil.',
+        'Story3': 'He worked with care and toil.',
+        'Story4': 'He placed the coin near the olive oil.',
+        'Story5': 'He jumped with joy and a coil.',
+        'Story6': 'What a treasure in the soil!',
+        'TheEnd': 'The End'
+    },
+    'cloud_and_mouse': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Diphthong (ou, ow)',
+        'Cover': 'The Mouse in the Cloud',
+        'Story1': 'A little brown mouse sat in a house.',
+        'Story2': 'Outside, dark clouds gathered loud.',
+        'Story3': 'The mouse looked up at the crowd.',
+        'Story4': 'He wore a coat and stood proud.',
+        'Story5': 'He shouted with a voice so loud.',
+        'Story6': 'Look at the great silver cloud!',
+        'TheEnd': 'The End'
+    },
+    'hawk_in_dawn': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Variant Vowel (au, aw)',
+        'Cover': 'The Hawk at Dawn',
+        'Story1': 'A hawk flew over the green lawn.',
+        'Story2': 'He woke up early at the dawn.',
+        'Story3': 'He saw a baby deer fawn.',
+        'Story4': 'He saw a line neatly drawn.',
+        'Story5': 'He gave a gentle morning yawn.',
+        'Story6': 'Fly high, hawk of the dawn!',
+        'TheEnd': 'The End'
+    },
+    'moon_and_spoon': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Variant Vowel (oo, ew)',
+        'Cover': 'The Moon and the Spoon',
+        'Story1': 'A silver spoon looked at the moon.',
+        'Story2': 'He hummed a sleepy evening tune.',
+        'Story3': 'The night breeze blew like a monsoon.',
+        'Story4': 'The stars lit up the calm lagoon.',
+        'Story5': 'Morning light would come soon.',
+        'Story6': 'Goodnight, glowing silver moon!',
+        'TheEnd': 'The End'
+    },
+    'cook_and_book': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Variant Vowel (short oo)',
+        'Cover': 'The Cook and the Book',
+        'Story1': 'A cook sat in a cozy nook.',
+        'Story2': 'He read a special wooden book.',
+        'Story3': 'He went to fetch water from the brook.',
+        'Story4': 'He caught a fish upon a hook.',
+        'Story5': 'He gave the recipe a look.',
+        'Story6': 'What a smart and cheerful cook!',
+        'TheEnd': 'The End'
+    },
+
+    // Multisyllabic & Suffixes
+    'helpful_rabbit': {
+        'Tier': 'Tier 4: VCe & Vowel Teams',
+        'Focus': 'Suffixes & Compounds (-ful, -ing)',
+        'Cover': 'The Helpful Rabbit',
+        'Story1': 'A helpful rabbit lived in the woods.',
+        'Story2': 'He shared all his baked goods.',
+        'Story3': 'He was jumping over stepping stones.',
+        'Story4': 'He helped squirrels with pinecones.',
+        'Story5': 'He planted seeds in the sunlit garden.',
+        'Story6': 'He was the most helpful little friend.',
+        'TheEnd': 'The End'
+    }
+};
+
+// ============================================================================
+// TIER 5 / SUPPLEMENT: Find It, Draw It (Interactive Fine Motor & Vocabulary)
+// ============================================================================
 const findItDrawItBooks = {
     'outside_nature': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Nature Vocabulary (Pairs with Tier 1 & 2)',
         'Cover': 'Find It, Draw It: Nature Trail',
         'Story1': 'Find a green leaf and draw its shape.',
         'Story2': 'Find a tall tree and draw its trunk.',
@@ -522,6 +958,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'sky_weather': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Weather Vocabulary (Pairs with Tier 2 & 4)',
         'Cover': 'Find It, Draw It: Sky & Weather',
         'Story1': 'Look up! Find the bright sun and draw it.',
         'Story2': 'Find a fluffy cloud and draw its shape.',
@@ -532,6 +970,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'neighborhood': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Community Vocabulary (Pairs with Tier 2 & 3)',
         'Cover': 'Find It, Draw It: On Our Street',
         'Story1': 'Find a parked car and draw its wheels.',
         'Story2': 'Find a bicycle and draw the handlebars.',
@@ -542,6 +982,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'water_world': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Water Vocabulary (Pairs with Tier 3 & 4)',
         'Cover': 'Find It, Draw It: Water & Splash',
         'Story1': 'Find a water drop and draw its ripple.',
         'Story2': 'Find a muddy puddle and draw its splash.',
@@ -552,6 +994,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'backyard_critters': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Animals Vocabulary (Pairs with Tier 2 & 3)',
         'Cover': 'Find It, Draw It: Backyard Critters',
         'Story1': 'Find a friendly cat and draw its whiskers.',
         'Story2': 'Find a playful dog and draw its floppy ears.',
@@ -562,6 +1006,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'my_closet': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Clothing Vocabulary (Pairs with Tier 2 & 3)',
         'Cover': 'Find It, Draw It: Clothes & Shoes',
         'Story1': 'Find your favorite hat and draw its brim.',
         'Story2': 'Find a shoe and draw its shoelaces.',
@@ -572,6 +1018,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'sports_park': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Park Vocabulary (Pairs with Tier 3)',
         'Cover': 'Find It, Draw It: At the Park',
         'Story1': 'Find a bouncy ball and draw its patterns.',
         'Story2': 'Find a baseball bat and draw its handle.',
@@ -582,6 +1030,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'fruit_stand': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Fruit Vocabulary (Pairs with Tier 4 Vowel Teams)',
         'Cover': 'Find It, Draw It: Fruit Stand',
         'Story1': 'Find a round red apple and draw its stem.',
         'Story2': 'Find a yellow banana and draw its peel.',
@@ -592,6 +1042,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'color_hunt': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Colors (Pairs with Tier 1 & 2)',
         'Cover': 'Find It, Draw It: Color Hunt',
         'Story1': 'Find something RED in your room and draw it.',
         'Story2': 'Find something BLUE near you and draw it.',
@@ -602,6 +1054,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'counting_fun': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Numbers 1–6 (Pairs with Tier 1)',
         'Cover': 'Find It, Draw It: Count Around You',
         'Story1': 'Find 1 clock on the wall and draw it.',
         'Story2': 'Find 2 shoes by the door and draw them.',
@@ -612,6 +1066,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'alphabet_fun': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Letter Formation A–F (Pairs with Tier 1)',
         'Cover': 'Find It, Draw It: Alphabet Shapes',
         'Story1': 'Draw a capital letter A shaped like a tent.',
         'Story2': 'Draw a letter B with two round bumps.',
@@ -622,6 +1078,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'feelings_faces': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Social Emotional (Pairs with Tier 2 & 3)',
         'Cover': 'Find It, Draw It: Feelings & Faces',
         'Story1': 'Draw a big HAPPY face with a wide smile.',
         'Story2': 'Draw a SAD face with a little tear.',
@@ -632,6 +1090,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'basic_shapes': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Geometry Shapes (Pairs with Tier 1 & 2)',
         'Cover': 'Find It, Draw It: Finding Shapes',
         'Story1': 'Find a CIRCLE in your home and draw it.',
         'Story2': 'Find a SQUARE with 4 equal sides and draw it.',
@@ -642,6 +1102,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'opposites_size': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Adjectives / Opposites (Pairs with Tier 2 & 3)',
         'Cover': 'Find It, Draw It: Big and Small',
         'Story1': 'Find something BIG and draw it filling the page.',
         'Story2': 'Find something TINY and draw it in the corner.',
@@ -652,6 +1114,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'sound_hunt': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Auditory & Senses (Pairs with Tier 3 & 4)',
         'Cover': 'Find It, Draw It: Loud & Quiet Sounds',
         'Story1': 'Draw something that makes a LOUD noise.',
         'Story2': 'Draw something that makes a QUIET sound.',
@@ -662,6 +1126,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'direction_game': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Spatial Prepositions (Pairs with Tier 2 & 3)',
         'Cover': 'Find It, Draw It: Positions & Space',
         'Story1': 'Draw an arrow pointing UP to the sky.',
         'Story2': 'Draw an arrow pointing DOWN to the floor.',
@@ -672,6 +1138,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'action_moves': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Verbs / Actions (Pairs with Tier 2 & 4)',
         'Cover': 'Find It, Draw It: Action Moves',
         'Story1': 'Draw yourself RUNNING in your sneakers.',
         'Story2': 'Draw yourself JUMPING high in the air.',
@@ -682,6 +1150,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'my_kitchen': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Home Objects (Pairs with Tier 2 & 3)',
         'Cover': 'Find It, Draw It: In the Kitchen',
         'Story1': 'Find a spoon and draw its smooth round bowl.',
         'Story2': 'Find a fork and draw its four pointy tines.',
@@ -692,6 +1162,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'vehicle_world': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Vehicles & Transport (Pairs with Tier 3 & 4)',
         'Cover': 'Find It, Draw It: Things That Go',
         'Story1': 'Draw a long train chugging down the rails.',
         'Story2': 'Draw an airplane flying high above clouds.',
@@ -702,6 +1174,8 @@ const findItDrawItBooks = {
         'TheEnd': 'The End'
     },
     'farm_life': {
+        'Tier': 'Supplement: Fine Motor & Vocabulary',
+        'Focus': 'Farm Life (Pairs with Tier 2 & 4 R-Controlled)',
         'Cover': 'Find It, Draw It: Down on the Farm',
         'Story1': 'Draw a big red barn with a tall roof.',
         'Story2': 'Draw a green tractor with giant rear tires.',
@@ -711,4 +1185,13 @@ const findItDrawItBooks = {
         'Story6': 'Draw a happy pink pig splashing in the mud.',
         'TheEnd': 'The End'
     }
+};
+
+// Global unified registry of all books across all 5 Tiers
+const allBooksRegistry = {
+    ...(typeof foundationsBooks !== 'undefined' ? foundationsBooks : {}),
+    ...(typeof learnToReadBooks !== 'undefined' ? learnToReadBooks : {}),
+    ...(typeof blendsAndSegmentsBooks !== 'undefined' ? blendsAndSegmentsBooks : {}),
+    ...(typeof advancedPhonicsBooks !== 'undefined' ? advancedPhonicsBooks : {}),
+    ...(typeof findItDrawItBooks !== 'undefined' ? findItDrawItBooks : {})
 };

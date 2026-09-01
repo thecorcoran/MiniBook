@@ -1,7 +1,9 @@
 // @ts-nocheck
 document.addEventListener('DOMContentLoaded', () => {
+    const foundationsContainer = document.getElementById('foundations-books-container');
     const learnToReadContainer = document.getElementById('rhyming-books-container');
     const blendsAndSegmentsContainer = document.getElementById('blends-and-segments-books-container');
+    const advancedPhonicsContainer = document.getElementById('advanced-phonics-books-container');
     const findItDrawItContainer = document.getElementById('find-it-draw-it-books-container');
 
     // PDF Generation Function
@@ -22,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Imposition layout:
             // Top Row (180° rotation): Page 4, Page 5, Page 6, Page 7
             // Bottom Row (0° rotation): Page 3, Page 2, Page 1 (Front Cover), Back Cover (Page 8)
-            const pageLayout = ['Page 4', 'Page 5', 'Page 6', 'Page 7', 'Page 3', 'Page 2', 'Page 1', 'Back Cover'];
+            const pageLayout = ['Page 4', 'Page 5', 'Page 6', 'Page 7', 'Page 3', 'Page 2', 'Back Cover', 'Page 1'];
 
             const cellWidth = pageWidth / 4;   // 198 pt
             const cellHeight = pageHeight / 2; // 306 pt
@@ -92,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const totalTextHeight = lines.length * lineHeight;
 
                 if (rotateDeg === 0) {
-                    // Start Y for top line to vertically center the entire block
                     const startY = cellY + (cellH / 2) + (totalTextHeight / 2) - (size * 0.85);
 
                     lines.forEach((line, idx) => {
@@ -110,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     });
                 } else if (rotateDeg === 180) {
-                    // For 180 degree rotation around center
                     const startY = cellY + (cellH / 2) - (totalTextHeight / 2) + (size * 0.85);
 
                     lines.forEach((line, idx) => {
@@ -171,21 +171,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (isCover) {
-                    // Page 1 is on bottom row (row 1, rotation 0°): Title is centered horizontally and vertically
                     drawCenteredInCell(text, timesRomanBoldFont, 18, x, y, cellWidth, cellHeight, 0);
                 } else if (isBackCover) {
-                    // Page 8 (Back Cover) is on bottom row (row 1, rotation 0°): "The End" is centered horizontally and vertically
                     drawCenteredInCell(text, timesRomanBoldFont, 20, x, y, cellWidth, cellHeight, 0);
                 } else {
-                    // Story pages: Left-justified text positioned towards the BOTTOM of the folded page
                     const font = helveticaFont;
                     const size = 13;
                     const lineHeight = 18;
 
                     if (row === 0) {
-                        // Top Row (Pages 4, 5, 6, 7): Rotated 180°.
-                        // To position text towards the bottom of the folded page (away from center fold, near sheet top edge):
-                        // Sheet Y is near top edge (y + cellHeight - margin - 45 = 545pt).
+                        // Top Row (Pages 4, 5, 6, 7): Rotated 180° towards bottom of folded page
                         page.drawText(text, {
                             x: x + cellWidth - margin,
                             y: y + cellHeight - margin - 45,
@@ -197,7 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             rotate: degrees(180)
                         });
 
-                        // Page number placed in bottom-right of the folded page (top-left of sheet cell)
                         if (pageNumberLabel) {
                             page.drawText(pageNumberLabel, {
                                 x: x + margin + 10,
@@ -209,8 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             });
                         }
                     } else {
-                        // Bottom Row (Pages 2, 3): Rotated 0°.
-                        // Positioned towards the bottom of the folded page (near sheet bottom edge: y + margin + 45 = 67pt).
+                        // Bottom Row (Pages 2, 3): Rotated 0° towards bottom of folded page
                         page.drawText(text, {
                             x: x + margin,
                             y: y + margin + 45,
@@ -222,7 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             rotate: degrees(0)
                         });
 
-                        // Page number in bottom-right of the folded page (bottom-right of sheet cell)
                         if (pageNumberLabel) {
                             page.drawText(pageNumberLabel, {
                                 x: x + cellWidth - margin - 10,
@@ -257,12 +249,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // Badge pill for category
         const badge = document.createElement('div');
         badge.className = 'card-badge';
-        if (bookType === 'rhyming') {
-            badge.textContent = 'Learn to Read';
+        if (bookType === 'foundations') {
+            badge.textContent = 'Tier 1: Letter Sounds';
+        } else if (bookType === 'rhyming') {
+            badge.textContent = 'Tier 2: CVC Words';
         } else if (bookType === 'blends') {
-            badge.textContent = 'Blends & Digraphs';
+            badge.textContent = 'Tier 3: Blends & Digraphs';
+        } else if (bookType === 'advanced') {
+            badge.textContent = 'Tier 4: VCe & Teams';
         } else {
-            badge.textContent = 'Find & Draw';
+            badge.textContent = 'Fine Motor Supplement';
         }
         card.appendChild(badge);
 
@@ -280,9 +276,11 @@ document.addEventListener('DOMContentLoaded', () => {
         fullText.className = 'book-full-text-preview';
 
         for (const page in book) {
-            const pageText = document.createElement('p');
-            pageText.innerHTML = `<strong>${page}:</strong> ${book[page]}`;
-            fullText.appendChild(pageText);
+            if (page !== 'Tier' && page !== 'Focus') {
+                const pageText = document.createElement('p');
+                pageText.innerHTML = `<strong>${page}:</strong> ${book[page]}`;
+                fullText.appendChild(pageText);
+            }
         }
         card.appendChild(fullText);
 
@@ -401,12 +399,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initialize Collections
+    // Initialize All Collections
+    if (foundationsContainer && typeof foundationsBooks !== 'undefined') {
+        populateBooks(foundationsBooks, foundationsContainer, 'foundations');
+    }
     if (learnToReadContainer && typeof learnToReadBooks !== 'undefined') {
         populateBooks(learnToReadBooks, learnToReadContainer, 'rhyming');
     }
     if (blendsAndSegmentsContainer && typeof blendsAndSegmentsBooks !== 'undefined') {
         populateBooks(blendsAndSegmentsBooks, blendsAndSegmentsContainer, 'blends');
+    }
+    if (advancedPhonicsContainer && typeof advancedPhonicsBooks !== 'undefined') {
+        populateBooks(advancedPhonicsBooks, advancedPhonicsContainer, 'advanced');
     }
     if (findItDrawItContainer && typeof findItDrawItBooks !== 'undefined') {
         populateBooks(findItDrawItBooks, findItDrawItContainer, 'findIt');
@@ -416,32 +420,49 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabButtons = document.querySelectorAll('.category-tab-btn');
     const sections = {
         'all': document.querySelectorAll('.book-collection-section'),
+        'foundations': [document.getElementById('foundations-books')],
         'learn-to-read': [document.getElementById('rhyming-books')],
         'blends': [document.getElementById('blends-and-segments-books')],
+        'advanced': [document.getElementById('advanced-phonics-books')],
         'find-it': [document.getElementById('find-it-draw-it-books')]
     };
 
-    tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            tabButtons.forEach(b => b.classList.remove('active-tab'));
-            btn.classList.add('active-tab');
-
-            const categoryKey = btn.dataset.category;
-
-            document.querySelectorAll('.book-collection-section').forEach(sec => {
-                sec.style.display = 'none';
-            });
-
-            if (categoryKey === 'all') {
-                document.querySelectorAll('.book-collection-section').forEach(sec => {
-                    sec.style.display = 'block';
-                });
+    function applyFilter(categoryKey) {
+        tabButtons.forEach(b => {
+            if (b.dataset.category === categoryKey) {
+                b.classList.add('active-tab');
             } else {
-                const targetSec = sections[categoryKey];
-                if (targetSec && targetSec[0]) {
-                    targetSec[0].style.display = 'block';
-                }
+                b.classList.remove('active-tab');
             }
         });
+
+        document.querySelectorAll('.book-collection-section').forEach(sec => {
+            sec.style.display = 'none';
+        });
+
+        if (categoryKey === 'all') {
+            document.querySelectorAll('.book-collection-section').forEach(sec => {
+                sec.style.display = 'block';
+            });
+        } else {
+            const targetSec = sections[categoryKey];
+            if (targetSec && targetSec[0]) {
+                targetSec[0].style.display = 'block';
+            }
+        }
+    }
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const categoryKey = btn.dataset.category;
+            applyFilter(categoryKey);
+        });
     });
+
+    // Check URL parameter (e.g. ?category=advanced)
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category');
+    if (categoryParam && sections[categoryParam]) {
+        applyFilter(categoryParam);
+    }
 });
